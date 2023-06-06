@@ -1,2 +1,18 @@
-<h1>Pets#show</h1>
-<p>Find me in app/views/pets/show.html.erb</p>
+<div class="container">
+  <h1 class="text-center mt-3">Pet</h1>
+
+      <div class="col-12">
+        <li class="card rounded shadow-sm">
+          <p class="card-title"><%= @pet.name %></p>
+          <p class="card-title"><%= @pet.description %></p>
+          <p class="card-title"><%= @pet.category_id %></p>
+          <p class="card-title">
+            <% @pet.photos.each do |photo| %>
+              <%= cl_image_tag photo.key %>
+            <% end %>
+          </p>
+        </li>
+      </div>
+
+  </ul>
+</div>
