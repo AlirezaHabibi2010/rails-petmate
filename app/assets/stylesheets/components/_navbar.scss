@@ -1,12 +1,29 @@
-.navbar-lewagon {
+.navbar{
   justify-content: space-between;
-  background: white;
+  background-color: #617A55;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+#navbar-home {
+  width: 40px; /* Set the desired width */
+  height: 40px; /* Set the desired height */
 }
 
-.navbar-lewagon .navbar-brand img {
+#navbar-heart {
+  width: 35px;
+  height: 35px;
+}
+
+#navbar-message {
   width: 40px;
+  height: 40px;
+}
+
+#navbar-profile{
+  width: 40px;
+  height: 40px;
+}
+
+#navbar-bookings{
+  width: 40px;
+  height: 40px;
 }
