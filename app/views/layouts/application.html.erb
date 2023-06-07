@@ -16,10 +16,13 @@
 
   <body>
     <div class="page-container">
-      <%= yield %>
+      <div class="content-container" style="margin-bottom: 65px">
+        <%= yield %>
+      </div>
       <%= render "shared/flashes" %>
       <%= render "shared/navbar" %>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
