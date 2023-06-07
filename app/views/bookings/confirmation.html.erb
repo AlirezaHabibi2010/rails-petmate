@@ -1,0 +1,13 @@
+<div class="container">
+<div class="row text-center justify-content-center my-5">
+  <div class="col-6 border border-secondary py-4 rounded">
+    <h2>Thank you for  the reservation!</h2>
+    <p>Your request has been successfully submited with order number
+      <strong><%=@booking.id%></strong>.
+      The owner will review your request soon.
+    </p>
+    <br>
+    <%= link_to "New Reservation", pets_path	, class: "btn btn-primary"%>
+  </div>
+</div>
+</div>
