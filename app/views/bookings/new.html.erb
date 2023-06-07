@@ -1,6 +1,10 @@
 <div class="container">
-  <h1 class="text-center mt-3">New Booking</h1>
-  <div class="d-flex flex-wrap justify-content-center w-100">
-    <%= render "bookings/form", pet: @pet, booking: @booking%>
+  <div class="row text-center justify-content-center align-items-center my-5" style="min-height: 80vh">
+    <div class="col-10 col-sm-6 border border-secondary py-4 rounded">
+      <h1 class="text-center mt-3">New Booking</h1>
+      <div class="d-flex flex-wrap justify-content-center w-100">
+        <%= render "bookings/form", pet: @pet, booking: @booking%>
+      </div>
+    </div>
   </div>
 </div>

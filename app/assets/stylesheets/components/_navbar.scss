@@ -27,3 +27,14 @@
   width: 40px;
   height: 40px;
 }
+
+.page-container {
+  min-height: 100vh;
+}
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+.row {
+  --bs-gutter-x: 0;
+}

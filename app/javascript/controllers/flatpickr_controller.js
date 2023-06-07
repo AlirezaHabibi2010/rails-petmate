@@ -16,30 +16,25 @@ export default class extends Controller {
     var time = (today.getHours() + 1) + ":00";
     flatpickr(this.startTimeTarget, {
               "enableTime": true,
-
               minDate: 'today',
               minTime: time,
-              time_24hr: true,
-              // maxDate: new Date().fp_incr(7), // 14 days from now
-              // dateFormat: "Y-m-d",
               dateFormat: "Y-m-d H:i",
-              // defaultDate: ['today',  new Date().fp_incr(7)],
               disable: unvailableDates,
               // Provide an id for the plugin to work
-              plugins: [new rangePlugin({ input: this.endTimeValue})],
+              plugins: [new rangePlugin({ input: "#endtime"})]
+              // plugins: [new confirmDatePlugin({ input: this.startTimeValue})],
+
             })
     flatpickr(this.endTimeTarget, {
               "enableTime": true,
 
               minDate: 'today',
               minTime: time,
-              // maxDate: new Date().fp_incr(7), // 14 days from now
-              // dateFormat: "Y-m-d",
               dateFormat: "Y-m-d H:i",
-              // defaultDate: ["2024-10-11", "2024-10-10"],
               disable: unvailableDates,
               // Provide an id for the plugin to work
-              plugins: [new rangePlugin({ input: this.startTimeValue})]
+              plugins: [new rangePlugin({ input: "#endtime"})]
+              // plugins: [new confirmDatePlugin({ })]
              })
   }
 }
