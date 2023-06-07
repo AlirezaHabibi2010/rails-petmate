@@ -4,6 +4,7 @@ class Booking < ApplicationRecord
 
   has_many :messages
   has_many :reviews
+  has_many :bookmarks
 
   validates_presence_of :start_time, :end_time, :pet, :user, :status
   validates :status, inclusion: { in: [0, 1, 2] }
