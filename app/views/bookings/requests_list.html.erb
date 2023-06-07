@@ -1,0 +1,110 @@
+<div class="container">
+<h1 class="text-center mt-3">All My Booking Requests</h1>
+
+<h3>Pending booking requests:</h3>
+<ul class="list-group">
+  <% @pending_requests.each do |booking| %>
+    <li class="list-group-item p-0 mt-1">
+      <div class="d-flex flex-wrap justify-content-start w-100">
+        <div class="">
+          <%= cl_image_tag booking.pet.photos.first.key, style: "height:100px; width:100px;" %>
+        </div>
+
+        <div class="p-2 flex-grow-1">
+          <h2 class="m-0 text-center"><%= link_to booking.pet.name, pet_path(booking.pet), class:"link-primary text-decoration-none" %></h2>
+          <div class="d-flex flex-wrap justify-content-around w-100">
+            <div class="d-flex flex-column justify-content-center px-0 mx-1">
+              <p class="m-0"> <strong>Price:</strong> <%=booking.pet.price%> € per night</p>
+              <p class="m-0"> <strong>Owner:</strong> <%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>
+            </div>
+            <div class="d-flex flex-column justify-content-center mx-3">
+              <p class="m-0"><strong>From:</strong> <%= booking.start_date %></p>
+              <p class="m-0"><strong>To:</strong> <%= booking.end_date %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center ml-auto m-1">
+            <%= link_to "Edit",  edit_booking_path(booking), class: "btn btn-warning m-1"  %>
+            <%= link_to "Delete",
+              booking_path(booking),
+              data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+              class: "btn btn-danger m-1"
+            %>
+        </div>
+
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<br>
+<h3>Confirmed requests:</h3>
+<ul class="list-group">
+  <% @accepted.each do |booking| %>
+    <li class="list-group-item p-0 mt-1">
+      <div class="d-flex flex-wrap justify-content-start w-100">
+        <div class="">
+          <%= cl_image_tag booking.pet.photos.first.key, style: "height:100px; width:100px;" %>
+        </div>
+
+        <div class="p-2 flex-grow-1">
+          <h2 class="m-0 text-center"><%= link_to booking.pet.name, pet_path(booking.pet), class:"link-primary text-decoration-none" %></h2>
+          <div class="d-flex flex-wrap justify-content-around w-100">
+            <div class="d-flex flex-column justify-content-center px-0 mx-1">
+              <p class="m-0"> <strong>Price:</strong> <%=booking.pet.price%> € per night</p>
+              <p class="m-0"> <strong>Owner:</strong> <%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>
+            </div>
+            <div class="d-flex flex-column justify-content-center mx-3">
+              <p class="m-0"><strong>From:</strong> <%= booking.start_date %></p>
+              <p class="m-0"><strong>To:</strong> <%= booking.end_date %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center ml-auto m-1">
+            <%= link_to "Delete",
+              booking_path(booking),
+              data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+              class: "btn btn-danger m-1"
+            %>
+        </div>
+
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<br>
+<h3>Declined requests:</h3>
+<ul class="list-group">
+  <% @accepted.each do |booking| %>
+    <li class="list-group-item p-0 mt-1">
+      <div class="d-flex flex-wrap justify-content-start w-100">
+        <div class="">
+          <%= cl_image_tag booking.pet.photos.first.key, style: "height:100px; width:100px;" %>
+        </div>
+
+        <div class="p-2 flex-grow-1">
+          <h2 class="m-0 text-center"><%= link_to booking.pet.name, pet_path(booking.pet), class:"link-primary text-decoration-none" %></h2>
+          <div class="d-flex flex-wrap justify-content-around w-100">
+            <div class="d-flex flex-column justify-content-center px-0 mx-1">
+              <p class="m-0"> <strong>Price:</strong> <%=booking.pet.price%> € per night</p>
+              <p class="m-0"> <strong>Owner:</strong> <%= "#{booking.pet.user.first_name} #{booking.flat.user.last_name}" %></p>
+            </div>
+            <div class="d-flex flex-column justify-content-center mx-3">
+              <p class="m-0"><strong>From:</strong> <%= booking.start_date %></p>
+              <p class="m-0"><strong>To:</strong> <%= booking.end_date %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center ml-auto m-1">
+            <%=raw link_to "Edit ",  edit_booking_path(booking), class: "btn btn-warning m-1 px-3"  %>
+        </div>
+
+      </div>
+    </li>
+  <% end %>
+</ul>
+</div>
