@@ -41,6 +41,32 @@ class PetsController < ApplicationController
     end
   end
 
+  def owner_requests_list
+    @pets = policy_scope(Pet).where(user: current_user).order(:name)
+
+    @declined = Array.new
+    @accepted = Array.new
+    @pending_requests = Array.new
+    @pets.each do |pet|
+      @declined_list = Array.new
+      @accepted_list = Array.new
+      @pending_requests_list = Array.new
+      pet.bookings.where('start_time >= ?', Date.today).order(:start_time).each do |booking|
+        if booking.status == 2
+          @declined_list << booking
+        elsif booking.status == 1
+          @accepted_list << booking
+        else
+          @pending_requests_list << booking
+        end
+      end
+      @declined <<  [pet, @declined_list] if !@declined_list.empty?
+      @accepted <<  [pet, @accepted_list] if !@accepted_list.empty?
+      @pending_requests <<  [pet, @pending_requests_list] if !@pending_requests_list.empty?
+    end
+    authorize @pets
+  end
+
   private
 
   def pet_params
