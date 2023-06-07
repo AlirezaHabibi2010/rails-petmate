@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:new, :create, :show]
   resources :pets, only: [:new, :create, :show]  do
-    resources :bookings, only: [:new, :create]
+    resources :bookings, only: [:new, :create, :edit, :update]
   end
 
-  resources :bookings, only: [:show, :edit, :update]
+  resources :bookings, only: [:show]
 end
