@@ -14,5 +14,16 @@
         </li>
       </div>
 
+      <div class="col-12">
+        <li class="card rounded shadow-sm">
+          <p class="card-title">
+            <% @pet.bookings.each do |booking| %>
+              <%= booking.start_time %> ,
+              <%= booking.end_time %>
+            <% end %>
+          </p>
+        </li>
+      </div>
+
   </ul>
 </div>
