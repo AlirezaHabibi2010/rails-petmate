@@ -29,6 +29,12 @@ class BookingsController < ApplicationController
     end
   end
 
+  def decline
+  end
+
+  def accept
+  end
+
   def confirmation
   end
 
