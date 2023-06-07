@@ -8,10 +8,14 @@
 require 'open-uri'
 
 puts "Drop all!"
+Review.destroy_all
+Message.destroy_all
+Bookmark.destroy_all
 Booking.destroy_all
 Pet.destroy_all
-User.destroy_all
 Category.destroy_all
+User.destroy_all
+
 
 def add_image(model, url)
   downloaded_image = URI.parse(URI::Parser.new.escape(url)).open
@@ -87,7 +91,6 @@ booking_ids = Booking.ids
 rand(50..100).times do
   booking_id = booking_ids.sample
   booking = Booking.find(booking_id)
-  # next if booking.reviews
 
   review = Review.new(
     content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: true),
@@ -116,5 +119,5 @@ rand(5..10).times do
   pet_id = pet_ids.sample
 
   bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
-  bookmark.save!
+  bookmark.save
 end
