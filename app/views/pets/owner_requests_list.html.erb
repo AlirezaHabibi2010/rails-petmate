@@ -1,0 +1,82 @@
+<div class="container">
+<h1 class="text-center mt-3">All Booking Requests for Owner</h1>
+
+<h3>Pending booking requests:</h3>
+<ul class="list-group">
+  <% @pending_requests.each do |pet| %>
+      <li class="list-group-item">
+        <h5 class="text-center"><%= link_to pet.first.name, pet_path(pet.first), class: "text-decoration-none" %></h5>
+        <ol class="list-group">
+          <% pet.last.each do |booking| %>
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Reserved By:</strong> <%= "#{booking.user.first_name} #{booking.user.last_name}" %>
+                    <br>
+                    <strong>From:</strong> <%= booking.start_time %>
+                    <br>
+                    <strong>To: </strong><%= booking.end_time %>
+                  </div>
+                  <div>
+                    <%# <%= link_to "Confirm", accept_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-primary me-2" %> %>
+                    <%# <%= link_to "Decline", decline_booking_path(booking), controller: :bookings, action: :accept, method: :put, class: "btn btn-danger" %> %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </li>
+  <% end %>
+</ul>
+<br>
+
+<h3>Confirmed:</h3>
+<ul class="list-group">
+  <% @accepted.each do |pet| %>
+      <li class="list-group-item">
+        <h5><%= link_to pet.first.name, pet_path(pet.first) %></h5>
+        <ol class="list-group">
+          <% pet.last.each do |booking| %>
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}, #{booking.user.email}" %>
+                    <br>
+                    From: <%= booking.start_time %>
+                    <br>
+                    To: <%= booking.end_time %>
+                  </div>
+                  <span class="btn btn-success disabled">Confirmed</span>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </li>
+  <% end %>
+</ul>
+
+<h3>Declined:</h3>
+<ul class="list-group">
+  <% @declined.each do |pet| %>
+      <li class="list-group-item">
+        <h5><%= link_to pet.first.name, pet_path(pet.first) %></h5>
+        <ol class="list-group">
+          <% pet.last.each do |booking| %>
+              <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    Reserved By: <%= "#{booking.user.first_name} #{booking.user.last_name}" %>
+                    <br>
+                    From: <%= booking.start_time %>
+                    <br>
+                    To: <%= booking.end_time %>
+                  </div>
+                  <span class="btn btn-info disabled">Declined</span>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </li>
+  <% end %>
+</ul>
+</div>

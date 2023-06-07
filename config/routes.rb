@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "/bookings/:id/confirmation", to: "bookings#confirmation", as:"booking_confirmation"
   get "/bookings/requests_list", to: "bookings#requests_list"
+  get "/pets/owner_requests_list", to: "pets#owner_requests_list"
   # Defines the root path route ("/")
   # root "articles#index"
   resources :categories, only: [:new, :create, :show]
