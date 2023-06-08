@@ -11,7 +11,6 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    @category.user = current_user
     authorize @category
 
     if @category.save
