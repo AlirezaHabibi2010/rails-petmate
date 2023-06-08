@@ -10,45 +10,30 @@
   </button>
 <% end %>
 
-<%# TODO: have loop around, have one such card for each pet in the database %>
-<div class="card mx-auto card-pet my-3">
-  <%= image_tag 'cat', alt: 'Pet picture', class: 'rounded-bottom-4 card-img-top' %>
-  <div class="d-flex">
-    <div class="p-2 align-self-center mr-auto">
-      <h2 class="m-0">Albert</h2>
-      <p class="m-0">Köln, Ehrenfeld</p>
+<% @pets.each do |pet| %>
+  <div class="card mx-auto card-pet my-3">
+    <% if pet.photos.present? %>
+      <%= image_tag pet.photos.first.url, class: 'rounded-bottom-4 card-img-top', alt: 'Pet picture' %>
+    <% else %>
+      <%= image_tag 'cat', alt: 'Pet picture', class: 'rounded-bottom-4 card-img-top' %>
+    <% end %>
+    <div class="d-flex">
+      <div class="p-2 align-self-center mr-auto">
+        <h2 class="m-0"><%= pet.name %></h2>
+        <p class="m-0"><%= pet.user.address %></p>
+        <p class="m-0">Id:<%= pet.id %></p>
+      </div>
+      <div class="p-2 align-self-center card-rating">
+        <% pet.average_rating.times do %>
+          <i class="fa-solid fa-star"></i>
+        <% end %>
+      </div>
     </div>
-    <div class="p-2 align-self-center">
-      <i class="fa-solid fa-star"></i>
-      <i class="fa-solid fa-star"></i>
-      <i class="fa-solid fa-star"></i>
-    </div>
+    <p class="card-text p-1">
+      <%= pet.description %>
+    </p>
+    <p class="btn btn-flat my-0">
+      Read more
+    </p>
   </div>
-  <p class="card-text p-1">
-    Description, this is an amazing pet! Really, really amazing.
-  </p>
-  <p class="btn btn-flat my-0">
-    Read more
-  </p>
-</div>
-
-
-<div class="card mx-auto card-pet my-3">
-  <%= image_tag 'cat', alt: 'Pet picture', class: 'rounded-bottom-4 card-img-top' %>
-  <div class="d-flex">
-    <div class="p-2 align-self-center mr-auto">
-      <h2 class="m-0">Robert</h2>
-      <p class="m-0">Köln, Deutz</p>
-    </div>
-    <div class="p-2 align-self-center">
-      <i class="fa-solid fa-star"></i>
-      <i class="fa-solid fa-star"></i>
-    </div>
-  </div>
-  <p class="card-text p-1">
-    Description, this is an amazing pet! Really, really amazing. But less than Albert.
-  </p>
-  <p class="btn btn-flat my-0">
-    Read more
-  </p>
-</div>
+<% end %>

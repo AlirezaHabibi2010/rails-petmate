@@ -15,4 +15,12 @@ class Pet < ApplicationRecord
       { from: range[0], to: range[1] }
     end
   end
+
+  def average_rating
+    if reviews.empty?
+      0
+    else
+      reviews.average(:rating).round
+    end
+  end
 end

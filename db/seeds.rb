@@ -68,7 +68,7 @@ descriptions = [
 
 rand(7..10).times.each do |i|
   puts "Pet number #{i}"
-  random_pet_url = "https://source.unsplash.com/random/500x1000/?pet"
+  random_pet_url = "https://source.unsplash.com/random/1000x500/?pet"
   pet = Pet.new(name: Faker::Creature::Dog.name, description: descriptions.sample, user_id: user_ids.sample, category_id: category_ids.sample)
   rand(3..5).times.each do |_|
     add_image(pet, random_pet_url)
