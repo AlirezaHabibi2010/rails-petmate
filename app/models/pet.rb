@@ -1,4 +1,33 @@
 class Pet < ApplicationRecord
+  include PgSearch::Model
+
+  pg_search_scope :search_by_type,
+                  associated_against: {
+                    category: [:name]
+                  },
+                  using: {
+                    tsearch: { prefix: true }
+                  }
+  pg_search_scope :search_by_address,
+                  associated_against: {
+                    user: [:address]
+                  },
+                  using: {
+                    tsearch: { prefix: true }
+                  }
+  pg_search_scope :without_bookings_between_dates,
+                  against: [:id],
+                  associated_against: {
+                    bookings: [:start_time, :end_time]
+                  },
+                  using: {
+                    tsearch: { any_word: true }
+                  }
+
+  def self.find_without_bookings_between_dates(start_date, end_date)
+    where.not(id: Booking.within_dates(start_date, end_date).select(:pet_id))
+  end
+
   belongs_to :category
   belongs_to :user
 
