@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
-  before_action :set_pet, only: %i[new create edit show]
-  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking]
+  before_action :set_pet, only: %i[new create show]
+  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking, unread_message_number]
 
   def new
     @booking = Booking.new
@@ -44,8 +44,9 @@ class BookingsController < ApplicationController
   end
 
   def inbox # for renter
-    @bookings = policy_scope(Booking)
+    @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(:updated_at)
     authorize @bookings
+    @completed = @bookings.where({ status: 3 })
     @declined = @bookings.where({ status: 2 })
     @accepted = @bookings.where({ status: 1 })
     @pending_requests = @bookings.where({ status: 0 })
@@ -83,6 +84,11 @@ class BookingsController < ApplicationController
   def read_message
     @messages = @booking.messages
     @messages.where.not(user: current_user).update({ read: true })
+  end
+
+  def unread_message_number
+    @messages = @booking.messages
+    return @messages.where.not(user: current_user, read: false).count
   end
 
   private
