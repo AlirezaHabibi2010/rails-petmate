@@ -1,0 +1,34 @@
+<div class="container col-12 col-md-6 col-lg-4">
+    <div class="chatroom"
+      data-controller="chatroom-subscription"
+      data-chatroom-subscription-chatroom-id-value="<%= @booking.id %>"
+    >
+          <h1>Messages</h1>
+
+          <p class="px-4 py-0 m-0">
+            <strong>Chat Between:</strong> <%= @booking.user.first_name %> and <%= @booking.pet.user.first_name %>
+            <br>
+            <strong>Pet:</strong> <%= @booking.pet.name %>
+          </p>
+
+          <div class="messages" data-chatroom-subscription-target="messages">
+            <% @booking.messages.each do |message| %>
+              <%= render "messages/message", message: message %>
+            <% end %>
+          </div>
+
+          <%= simple_form_for [@booking, @message],
+            html: {data: {action: "turbo:submit-end->chatroom-subscription#resetForm"}, class: "d-flex"} do |f|
+          %>
+            <%= f.input :content,
+              label: false,
+              placeholder: "Write new massage",
+              class: "bg-danger",
+              id: "usermsg",
+              wrapper_html: {class: "flex-grow-1"}
+            %>
+            <%= f.submit "Send", class: "btn btn-success mb-3" %>
+          <% end %>
+
+    </div>
+</div>

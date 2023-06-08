@@ -18,9 +18,9 @@
     <div class="page-container">
       <div class="content-container" style="margin-bottom: 65px">
         <%= yield %>
+        <%= render "shared/navbar" %>
+        <%= render "shared/flashes" %>
       </div>
-      <%= render "shared/flashes" %>
-      <%= render "shared/navbar" %>
     </div>
 
 
