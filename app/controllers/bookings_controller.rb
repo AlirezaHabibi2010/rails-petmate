@@ -44,10 +44,8 @@ class BookingsController < ApplicationController
   end
 
   def inbox # for renter
-    # @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(:updated_at)
-    @bookings = Booking.includes(:pet).where(pet: { user: current_user }).or(
-      Booking.where(bookings: { user: current_user })
-    )
+    @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(:updated_at)
+
     authorize @bookings
     @completed = @bookings.where({ status: 3 })
     @declined = @bookings.where({ status: 2 })
