@@ -16,7 +16,9 @@ class BookingPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.all
+        scope.includes(:pet).where(pet: {user: user}).or(
+          scope.where(bookings: {user: user})
+        )
       end
     end
   end

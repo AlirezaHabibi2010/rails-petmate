@@ -76,8 +76,18 @@ class BookingsController < ApplicationController
 
   def chatroom
     authorize @booking
-    @message = Message.new
 
+    if @booking.status == 0
+      @status = "pending"
+    elsif @booking.status == 1
+      @status = "accepted"
+    elsif @booking.status == 2
+      @status = "declines"
+    elsif @booking.status == 3
+      @status = "completed"
+    end
+
+    @message = Message.new
     read_message
   end
 
