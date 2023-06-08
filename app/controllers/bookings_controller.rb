@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_pet, only: %i[new create edit show]
-  before_action :set_booking, only: %i[edit update confirmation]
+  before_action :set_booking, only: %i[edit update confirmation chatroom]
 
   def new
     @booking = Booking.new
@@ -12,7 +12,9 @@ class BookingsController < ApplicationController
     @booking.pet = @pet
     @booking.user = current_user
     authorize @booking
+
     if @booking.save
+      @booking.messages.create(content: params["message"].present? ? params["message"] : "default message", user: current_user)
       redirect_to booking_confirmation_path(@booking), notice: "Booking was successfully saved."
     else
       render :new, status: :unprocessable_entity
@@ -27,7 +29,7 @@ class BookingsController < ApplicationController
     authorize @booking
     if @booking.update(booking_params)
       @booking.update({ status: 0 })
-      redirect_to pet_path(@booking.pet)
+      redirect_to pet_path(@booking.pet), notice: "Booking was successfully edited."
     else
       render :new, status: :unprocessable_entity
     end
@@ -61,6 +63,11 @@ class BookingsController < ApplicationController
 
   def confirmation
     authorize @booking
+  end
+
+  def chatroom
+    authorize @booking
+    @message = Message.new
   end
 
   private

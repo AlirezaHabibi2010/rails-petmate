@@ -14,4 +14,6 @@ class Booking < ApplicationRecord
   scope :within_dates, ->(start_date, end_date) {
     where("(start_time, end_time) OVERLAPS (?, ?)", start_date, end_date)
   }
+
+  accepts_nested_attributes_for :messages
 end
