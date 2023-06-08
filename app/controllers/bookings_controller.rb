@@ -13,6 +13,7 @@ class BookingsController < ApplicationController
     @booking.user = current_user
     authorize @booking
     if @booking.save
+      @booking.messages.create(content: params["message"].present? ? params["message"] : "default message", user: current_user)
       redirect_to booking_confirmation_path(@booking), notice: "Booking was successfully saved."
     else
       render :new, status: :unprocessable_entity
@@ -74,6 +75,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:start_time, :end_time, :message)
+    params.require(:booking).permit(:start_time, :end_time)
   end
 end
