@@ -1,0 +1,14 @@
+.carousel-item.active, .carousel-item-next, .carousel-item-prev {
+  display: block;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  object-fit: cover;
+}
+ .carousel-item img {
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+ }

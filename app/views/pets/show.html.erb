@@ -1,29 +1,55 @@
+  <div id="picture-carousel" class="carousel slide" data-bs-interval="false">
+    <div class="carousel-inner">
+      <% @pet.photos.each_with_index do |photo, index| %>
+        <div class="carousel-item<%= " active" if index == 0 %>">
+          <%= cl_image_tag photo.key, class: "d-block w-100" %>
+        </div>
+      <% end %>
+    </div>
+  <h1 class="text-center mt-3"><%= @pet.name %></h1>
+    <button class="carousel-control-prev" type="button" data-bs-target="#picture-carousel" data-bs-slide="prev" onclick="event.stopPropagation();">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#picture-carousel" data-bs-slide="next" onclick="event.stopPropagation();">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 <div class="container">
-  <h1 class="text-center mt-3">Pet</h1>
 
-      <div class="col-12">
-        <li class="card rounded shadow-sm">
-          <p class="card-title"><%= @pet.name %></p>
-          <p class="card-title"><%= @pet.description %></p>
-          <p class="card-title"><%= @pet.category_id %></p>
-          <p class="card-title">
-            <% @pet.photos.each do |photo| %>
-              <%= cl_image_tag photo.key %>
-            <% end %>
-          </p>
-        </li>
+
+  <div class="col-12 mt-3">
+    <div class="card rounded shadow-sm" style="height: 200px; margin: 0;">
+      <div class="card-body">
+        <h5 class="card-title">Description:</h5>
+        <p class="card-text"><%= @pet.description %></p>
+        <hr>
+        <h5 class="card-title">Details:</h5>
+        <p class="card-text"><strong>Category:</strong> <%= @pet.category.name %></p>
+        <p class="card-text"><strong>Owner:</strong> <%= @pet.user.first_name %></p>
+        <hr>
+        <%= link_to "Hang with this pet", new_pet_booking_path(@pet) , class: "btn btn-secondary d-block mx-auto mt-3" %>
       </div>
+    </div>
+  </div>
 
-      <div class="col-12">
-        <li class="card rounded shadow-sm">
-          <p class="card-title">
-            <% @pet.bookings.each do |booking| %>
-              <%= booking.start_time %> ,
-              <%= booking.end_time %>
-            <% end %>
-          </p>
-        </li>
+  <div class="col-12 mt-3">
+    <div class="card rounded shadow-sm" style="margin: 0;">
+      <div class="card-body">
+        <h5 class="card-title">Bookings:</h5>
+        <ul class="list-group">
+          <% @pet.bookings.each do |booking| %>
+            <li class="list-group-item">
+              <p class="card-text"><strong>From:</strong> <%= booking.start_time.strftime("%Y-%m-%d") %></p>
+              <p class="card-text"><strong>To:</strong> <%= booking.end_time.strftime("%Y-%m-%d") %></p>
+              <p class="card-text"><strong>Reserved by:</strong> <%= booking.user.first_name %></p>
+              <%# <p class="card-text"><strong>Status:</strong> <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %></p> %>
+            </li>
+          <% end %>
+        </ul>
       </div>
+    </div>
+  </div>
 
-  </ul>
 </div>

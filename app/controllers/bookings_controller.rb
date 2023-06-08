@@ -4,7 +4,6 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.new
-    @message = Message.new
     authorize @booking
   end
 
@@ -14,17 +13,9 @@ class BookingsController < ApplicationController
     @booking.user = current_user
     authorize @booking
 
-    @message = Message.new(message_params)
-    @message.user = current_user
-    authorize @message
-
     if @booking.save
-      @message.booking = @booking
-      if @message.save
-        redirect_to booking_confirmation_path(@booking), notice: "Booking was successfully saved."
-      else
-        render :new, status: :unprocessable_entity
-      end
+      @booking.messages.create(content: params["message"].present? ? params["message"] : "default message", user: current_user)
+      redirect_to booking_confirmation_path(@booking), notice: "Booking was successfully saved."
     else
       render :new, status: :unprocessable_entity
     end
@@ -90,10 +81,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:start_time, :end_time, :message)
-  end
-
-  def message_params
-    params.require(:booking).require(:message).permit(:content)
+    params.require(:booking).permit(:start_time, :end_time)
   end
 end
