@@ -49,4 +49,8 @@ class BookingPolicy < ApplicationPolicy
   def confirmation?
     record.user == user
   end
+
+  def chatroom?
+    record.user == user || record.pet.user == user
+  end
 end

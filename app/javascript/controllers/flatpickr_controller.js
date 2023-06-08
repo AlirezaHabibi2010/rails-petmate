@@ -18,10 +18,11 @@ export default class extends Controller {
               "enableTime": true,
               minDate: 'today',
               minTime: time,
+              Default: time,
               dateFormat: "Y-m-d H:i",
               disable: unvailableDates,
               // Provide an id for the plugin to work
-              plugins: [new rangePlugin({ input: "#endtime"})]
+              // plugins: [new rangePlugin({ input: "#endtime"})]
               // plugins: [new confirmDatePlugin({ input: this.startTimeValue})],
 
             })
@@ -33,7 +34,7 @@ export default class extends Controller {
               dateFormat: "Y-m-d H:i",
               disable: unvailableDates,
               // Provide an id for the plugin to work
-              plugins: [new rangePlugin({ input: "#endtime"})]
+              // plugins: [new rangePlugin({ input: "#endtime"})]
               // plugins: [new confirmDatePlugin({ })]
              })
   }
