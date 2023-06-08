@@ -4,7 +4,7 @@
       <%= f.input :start_time, label: 'CHECK-IN', as: :string, input_html: { data: { flatpickr_target: "startTime" } } %>
       <%= f.input :end_time, label: 'CHECK-OUT', as: :string, input_html: { data: { flatpickr_target: "endTime" }, id: 'endtime' } %>
       <%= label_tag("First Message") %>
-      <%= text_field_tag :message, "", class: "form-control my-2" , as: :text %>
+      <%= text_area_tag  :message, "", class: "form-control my-2" , as: :text %>
       <%= f.submit 'Submit', class: "btn btn-success" %>
     <% end %>
   </div>

@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_pet, only: %i[new create edit show]
-  before_action :set_booking, only: %i[edit update confirmation chatroom]
+  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking]
 
   def new
     @booking = Booking.new
@@ -43,6 +43,14 @@ class BookingsController < ApplicationController
     @pending_requests = @bookings.where({ status: 0 })
   end
 
+  def inbox # for renter
+    @bookings = policy_scope(Booking)
+    authorize @bookings
+    @declined = @bookings.where({ status: 2 })
+    @accepted = @bookings.where({ status: 1 })
+    @pending_requests = @bookings.where({ status: 0 })
+  end
+
   def decline
     authorize @booking
     if @booking.update({ declined: true, confirmed_by_owner: false })
@@ -68,6 +76,13 @@ class BookingsController < ApplicationController
   def chatroom
     authorize @booking
     @message = Message.new
+
+    read_message
+  end
+
+  def read_message
+    @messages = @booking.messages
+    @messages.where.not(user: current_user).update({ read: true })
   end
 
   private

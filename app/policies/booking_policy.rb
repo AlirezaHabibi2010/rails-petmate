@@ -53,4 +53,8 @@ class BookingPolicy < ApplicationPolicy
   def chatroom?
     record.user == user || record.pet.user == user
   end
+
+  def inbox?
+    record.user == user || record.pet.user == user
+  end
 end
