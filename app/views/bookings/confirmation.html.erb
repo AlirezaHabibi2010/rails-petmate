@@ -7,7 +7,8 @@
           The owner will review your request soon.
         </p>
         <br>
-        <%= link_to "New Reservation", pets_path	, class: "btn btn-success"%>
+        <%= link_to "Send new message to #{@booking.pet.user.first_name}", booking_chatroom_path(@booking)	, class: "btn btn-success"%>
+        <%= link_to "New Reservation", pets_path	, class: "btn btn-danger"%>
       </div>
     </div>
 </div>
