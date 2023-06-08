@@ -27,7 +27,7 @@ class BookingsController < ApplicationController
     authorize @booking
     if @booking.update(booking_params)
       @booking.update({ status: 0 })
-      redirect_to pet_path(@booking.pet)
+      redirect_to pet_path(@booking.pet), notice: "Booking was successfully edited."
     else
       render :new, status: :unprocessable_entity
     end
