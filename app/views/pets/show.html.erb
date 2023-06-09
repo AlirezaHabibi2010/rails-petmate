@@ -44,12 +44,18 @@
               <p class="card-text"><strong>From:</strong> <%= booking.start_time.strftime("%Y-%m-%d") %></p>
               <p class="card-text"><strong>To:</strong> <%= booking.end_time.strftime("%Y-%m-%d") %></p>
               <p class="card-text"><strong>Reserved by:</strong> <%= booking.user.first_name %></p>
-              <%# <p class="card-text"><strong>Status:</strong> <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %></p> %>
+              <%# <p class="card-text"><strong>Status:</strong> <%= booking.confirmed_by_owner ? "Confirmed" : "Unconfirmed" %></p>
             </li>
           <% end %>
         </ul>
       </div>
     </div>
   </div>
-
+<% if user_signed_in? %>
+    <% if current_user.bookmarks.exists?(pet_id: @pet.id) %>
+      <%= link_to "Remove Bookmark", bookmark_path(@pet), method: :delete, class: "btn btn-danger" %>
+    <% else %>
+      <%= link_to "Bookmark", bookmarks_path(pet_id: @pet), method: :post, class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
 </div>
