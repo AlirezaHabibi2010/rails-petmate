@@ -35,7 +35,7 @@ gem "pg_search"
 gem "sidekiq"
 gem "sidekiq-failures", "~> 1.0"
 
-# gem 'redis-rails'
+gem 'redis-rails'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
