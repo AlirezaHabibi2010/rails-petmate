@@ -3,7 +3,9 @@ class BookmarksController < ApplicationController
 
   def create
     @pet = Pet.find(params[:pet_id])
-    current_user.bookmarks.create(pet: @pet)
+    @bookmark = current_user.bookmarks.create(pet: @pet)
+
+    authorize @bookmark
 
     respond_to do |format|
       format.html { redirect_to @pet, notice: "Pet bookmarked successfully." }

@@ -22,9 +22,7 @@
       <p class="card-text p-1">
         <%= bookmark.pet.description %>
       </p>
-      <p class="btn btn-flat my-0">
-        Read more
-      </p>
+      <%= link_to "Read more", pet_path(bookmark.pet), class:"btn btn-flat my-0"%>
     </div>
   <% end %>
 </div>
