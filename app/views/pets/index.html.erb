@@ -1,14 +1,16 @@
-<%= simple_form_for :search, url: pets_path, method: :get, html: { class: "pet-search-form mb-2" } do |f| %>
-  <input class="form-control string required" type="text" placeholder="Where" name="search[where]" />
-  <div class="d-flex">
-    <input class="form-control string required" type="text" placeholder="From" name="search[from]" />
-    <input class="form-control string required" type="text" placeholder="To" name="search[to]" />
-  </div>
-  <input class="form-control string required" type="text" placeholder="Type of pet" name="search[type]" />
-  <button name="button" type="submit" class="btn btn-flat">
-    <i class="fas fa-search"></i> Search
-  </button>
-<% end %>
+<div class="widget-content" data-unavailable="[]">
+  <%= simple_form_for :search, url: pets_path, method: :get, html: { class: "pet-search-form mb-2" }, data: { controller: 'flatpickr', flatpickr_start_time_value: "#starttime", flatpickr_end_time_value: "#endtime" } do |f| %>
+    <input class="form-control string required" type="text" placeholder="Where" name="search[where]" />
+    <div class="d-flex">
+      <input class="form-control string required" type="text" placeholder="From" name="search[from]" data-flatpickr-target="startTime"/>
+      <input class="form-control string required" type="text" placeholder="To" name="search[to]" data-flatpickr-target="endTime" />
+    </div>
+    <input class="form-control string required" type="text" placeholder="Type of pet" name="search[type]" />
+    <button name="button" type="submit" class="btn btn-flat">
+      <i class="fas fa-search"></i> Search
+    </button>
+  <% end %>
+</div>
 
 <% @pets.each do |pet| %>
   <div class="card mx-auto card-pet my-3">
