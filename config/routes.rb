@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "/bookings/:id/confirmation", to: "bookings#confirmation", as: "booking_confirmation"
   get "/bookings/requests_list", to: "bookings#requests_list"
+  get "/inbox", to: "bookings#inbox"
   get "/bookings/:id/chatroom", to: "bookings#chatroom", as: "booking_chatroom"
   get "/pets/owner_requests_list", to: "pets#owner_requests_list"
   # Defines the root path route ("/")
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
     resources :bookings, only: %i[new create edit update]
   end
 
-  resources :bookings, only: %i[show] do
-    resources :messages, only: [:new, :create]
+  resources :bookings, only: %i[show edit update] do
+    resources :messages, only: %i[new create]
   end
 end
