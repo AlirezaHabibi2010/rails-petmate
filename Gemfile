@@ -31,7 +31,7 @@ gem "jbuilder"
 gem "pundit"
 gem "pg_search"
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+# gem "redis", "~> 4.0"
 gem "sidekiq"
 gem "sidekiq-failures", "~> 1.0"
 
