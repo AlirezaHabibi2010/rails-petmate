@@ -16,6 +16,7 @@ export default class extends Controller {
       fetch(url, {
         method: "POST",
         headers: {
+          "Accept": "text/plain",
           "X-CSRF-Token": csrfToken
         }
       })

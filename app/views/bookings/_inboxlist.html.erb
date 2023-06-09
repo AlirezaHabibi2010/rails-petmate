@@ -1,0 +1,49 @@
+<% if bookings.size == 0 %>
+  <p>empty</p>
+<% else %>
+  <ul class="list-group px-1">
+      <% bookings.each do |booking| %>
+        <li class="list-group-item p-0 mt-1">
+          <div class="d-flex flex-wrap justify-content-between w-100">
+            <div class="align-center">
+            </div>
+
+            <div class="p-2 flex-grow-1">
+                <h2 class="m-0 text-left px-3"><%= link_to booking.pet.name, pet_path(booking.pet), class:"link-primary text-decoration-none" %></h2>
+              <div class="d-flex flex-wrap w-100">
+                <div class="d-flex flex-column justify-content-start mx-3 text-left">
+                  <p class="m-0"> <strong>Owner:</strong> <%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>
+                  <p class="m-0"> <strong>user:</strong> <%= "#{booking.user.first_name} #{booking.user.last_name}" %></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2 flex-grow-1">
+              <div class="d-flex flex-wrap justify-content-end  w-100">
+                <div class="d-flex flex-column justify-content-end mx-3 text-left">
+                  <p class="m-0"><strong>From:</strong> <%= booking.start_time %></p>
+                  <p class="m-0"><strong>To:</strong> <%= booking.end_time %></p>
+                  <ul class="list-group list-group-horizontal border-0 p-0 m-0 justify-content-center">
+                    <li class="list-group-item p-0 m-0  border-0">
+                      <%= link_to raw('<i class="fa-solid fa-envelope"></i>'), booking_chatroom_path(booking), class: "btn m-1"  %>
+                    </li>
+                    <li class="list-group-item p-0 m-0  border-0">
+                      <%= link_to raw('<i class="fa-solid fa-pen-to-square" style="color:  #617A55;"></i>'), edit_booking_path(booking), class: "btn m-1"  %>
+                    </li>
+                    <li class="list-group-item p-0 m-0  border-0">
+                      <%= link_to raw('<i class="fa-sharp fa-solid fa-trash" style="color:  #617A55;"></i>'),
+                        booking_path(booking),
+                        data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+                        class: "btn m-1"
+                      %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+  </ul>
+
+<% end %>

@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :pets
   has_many :bookings
   has_many :messages
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
   has_many :reviews, through: :bookings
 
   validates_presence_of :first_name, :last_name, :photo, :address, :email

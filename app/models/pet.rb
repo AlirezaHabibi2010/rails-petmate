@@ -32,7 +32,9 @@ class Pet < ApplicationRecord
   belongs_to :user
 
   has_many :bookings
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
+  has_many :users, through: :bookmarks
+
   has_many_attached :photos
   has_many :reviews, through: :bookings
 
