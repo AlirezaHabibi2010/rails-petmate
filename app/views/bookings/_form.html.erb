@@ -1,11 +1,11 @@
 <div id='pet-booking-dates'>
   <div class="widget-content" data-unavailable="<%= pet.unavailable_dates.to_json %>">
-    <%= simple_form_for([pet, booking], data: { controller: 'flatpickr', flatpickr_start_time_value: "#starttime", flatpickr_end_time_value: "#endtime" }) do |f| %>
-      <%= f.input :start_time, label: 'CHECK-IN', as: :string, input_html: { data: { flatpickr_target: "startTime" } } %>
-      <%= f.input :end_time, label: 'CHECK-OUT', as: :string, input_html: { data: { flatpickr_target: "endTime" }, id: 'endtime' } %>
+    <%= simple_form_for([pet, booking], data: { }) do |f| %>
+      <%= f.input :start_time, label: 'CHECK-IN', as: :string,   input_html: { data: { controller: "flatpickr" } } %>
+      <%= f.input :end_time, label: 'CHECK-OUT', as: :string,   input_html: { data: { controller: "flatpickr" } }  %>
       <%= label_tag("First Message") %>
       <%= text_area_tag  :message, "", class: "form-control my-2" , as: :text %>
-      <%= f.submit 'Submit', class: "btn btn-success" %>
+      <%= f.submit 'Submit', class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

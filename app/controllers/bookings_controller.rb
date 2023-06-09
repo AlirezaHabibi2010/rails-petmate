@@ -47,7 +47,8 @@ class BookingsController < ApplicationController
     @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(:updated_at)
 
     authorize @bookings
-    @completed = @bookings.where({ status: 3 })
+    @completed = @bookings.where({ status: 4 })
+    @ongoing = @bookings.where({ status: 3 })
     @declined = @bookings.where({ status: 2 })
     @accepted = @bookings.where({ status: 1 })
     @pending_requests = @bookings.where({ status: 0 })
@@ -64,7 +65,7 @@ class BookingsController < ApplicationController
 
   def accept
     authorize @booking
-    if @booking.update({ confirmed_by_owner: true, declined: false })
+    if @booking.update({ status: 1})
       redirect_to pets_owner_requests_list_path
     else
       render :new, status: :unprocessable_entity
@@ -77,19 +78,26 @@ class BookingsController < ApplicationController
 
   def chatroom
     authorize @booking
-
-    if @booking.status == 0
-      @status = "pending"
-    elsif @booking.status == 1
-      @status = "accepted"
-    elsif @booking.status == 2
-      @status = "declines"
-    elsif @booking.status == 3
-      @status = "completed"
-    end
-
+    @status = status(@booking)
     @message = Message.new
     read_message
+  end
+
+  def status(booking)
+    status = "pending"
+
+    case booking.status
+    when 0
+      "pending"
+    when 1
+      "accepted"
+    when 2
+      "declines"
+    when 3
+      "ongoing"
+    when 4
+      "completed"
+    end
   end
 
   def read_message
