@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   resources :bookmarks, only: :index
   resources :categories, only: %i[new create show]
   resources :pets, only: %i[index new create show]  do
-    resources :bookmarks, only: [:create, :destroy]
     resources :bookings, only: %i[new create edit update]
     resources :bookmarks, only: %i[create destroy]
   end
