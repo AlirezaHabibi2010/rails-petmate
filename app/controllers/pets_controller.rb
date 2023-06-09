@@ -3,7 +3,19 @@ class PetsController < ApplicationController
 
   def index
     @pets = policy_scope(Pet)
-    authorize @pets
+    if params[:search].present?
+      if params[:search][:type].present?
+        @pets = @pets.search_by_type(params[:search][:type])
+      end
+      if params[:search][:where].present?
+        @pets = @pets.search_by_address(params[:search][:where])
+      end
+      if params[:search][:from].present? && params[:search][:to].present?
+        start_date = Date.parse(params[:search][:from])
+        end_date = Date.parse(params[:search][:to])
+        @pets = @pets.find_without_bookings_between_dates(start_date, end_date)
+      end
+    end
   end
 
   def show
