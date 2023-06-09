@@ -32,7 +32,7 @@ class Pet < ApplicationRecord
   belongs_to :user
 
   has_many :bookings
-  has_many :bookmark
+  has_many :bookmarks
   has_many_attached :photos
   has_many :reviews, through: :bookings
 
@@ -51,5 +51,9 @@ class Pet < ApplicationRecord
     else
       reviews.average(:rating).round
     end
+  end
+
+  def bookmark(user)
+    bookmarks.find_by(user: user)
   end
 end
