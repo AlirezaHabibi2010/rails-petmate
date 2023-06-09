@@ -18,4 +18,5 @@ class User < ApplicationRecord
   def bookmarked?(pet)
     bookmarks.map(&:pet).include?(pet)
   end
+
 end
