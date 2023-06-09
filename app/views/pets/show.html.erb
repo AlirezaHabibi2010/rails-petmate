@@ -19,7 +19,7 @@
   <div class="pet-info">
     <h1 class="text-center"><%= @pet.name %></h1>
     <% if @pet.reviews.count > 0 %>
-      <% average_rating = @pet.reviews.average(:rating) %>
+      <% average_rating = @pet.reviews.average(:rating).round(1) %>
       <div class="average-rating">
         <% average_rating.floor.times do %>
           <i class="fa-regular fa-star"></i>
@@ -73,6 +73,7 @@
               View All Reviews
             </button>
           <% end %>
+           <%= link_to "Hang with this pet", new_pet_booking_path(@pet) , class: "btn btn-success d-block mx-auto mt-3" %>
         </div>
       </div>
     </div>
