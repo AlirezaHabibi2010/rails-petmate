@@ -1,0 +1,56 @@
+.modal-body .review-item {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.review-item .user-name {
+  font-weight: bold;
+  color: #333;
+}
+.review-item .rating {
+  display: flex;
+  align-items: center;
+}
+.review-item .rating i {
+  color: gold;
+  margin-right: 5px;
+}
+.review-item .rating-count {
+  margin-left: 5px;
+  font-size: 14px;
+  color: #888;
+}
+
+.review-item {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.review-item .user-name {
+  font-weight: bold;
+  color: #333;
+}
+.review-item .rating {
+  display: flex;
+  align-items: center;
+}
+.review-item .rating i {
+  color: gold;
+  margin-right: 5px;
+}
+.highlight {
+  padding: 5px;
+}
+.pet-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.pet-info .average-rating {
+  margin-left: 10px;
+}
+.pet-info .average-rating i {
+  color: gold;
+  margin-right: 2px;
+}

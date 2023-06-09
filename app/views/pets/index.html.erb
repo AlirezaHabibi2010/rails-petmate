@@ -16,6 +16,14 @@
 
 <% @pets.each do |pet| %>
   <div class="card mx-auto card-pet my-3">
+    <div class="heart-button position-absolute top-0 end-0">
+      <i
+        data-controller="heart-button"
+        data-heart-button-url-value="<%= current_user.bookmarked?(pet) ? pet_bookmark_url(pet, pet.bookmark(current_user)) : pet_bookmarks_url(pet) %>"
+        data-action="click->heart-button#toggleBookmark"
+        class="fas fa-heart fa-2x <%= "heart-red" if current_user.bookmarked?(pet) %>">
+      </i>
+    </div>
     <% if pet.photos.present? %>
       <%= image_tag pet.photos.first.url, class: 'rounded-bottom-4 card-img-top', alt: 'Pet picture' %>
     <% else %>

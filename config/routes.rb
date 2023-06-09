@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :pets, only: %i[index new create show]  do
     resources :bookmarks, only: [:create, :destroy]
     resources :bookings, only: %i[new create edit update]
+    resources :bookmarks, only: %i[create destroy]
   end
 
   resources :bookings, only: %i[show edit update] do

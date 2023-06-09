@@ -14,4 +14,8 @@ class User < ApplicationRecord
   validates_presence_of :first_name, :last_name, :photo, :address, :email
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
+
+  def bookmarked?(pet)
+    bookmarks.map(&:pet).include?(pet)
+  end
 end

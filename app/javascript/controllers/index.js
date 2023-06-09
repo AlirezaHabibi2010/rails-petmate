@@ -10,6 +10,9 @@ application.register("chatroom-subscription", ChatroomSubscriptionController)
 import FlatpickrController from "./flatpickr_controller"
 application.register("flatpickr", FlatpickrController)
 
+import HeartButtonController from "./heart_button_controller"
+application.register("heart-button", HeartButtonController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 

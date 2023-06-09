@@ -57,19 +57,48 @@ user.save!
 user_ids = User.ids
 
 puts "Creating pets"
-descriptions = [
-  "Meet the cutest little puppy ever!",
-  "This fluffy cat loves to cuddle.",
-  "Beautiful parrot with colorful feathers.",
-  "A graceful fish that will add beauty to your aquarium.",
-  "Friendly reptile looking for a new home.",
-  "Adorable hamster that loves to run on the wheel."
-]
+
+descriptions = {
+  "Dogs" => [
+    "Meet the cutest little puppy ever!",
+    "This fluffy dog loves to cuddle.",
+    "Friendly and playful dog looking for a new home."
+  ],
+  "Cats" => [
+    "Adorable cat that loves to nap.",
+    "Playful and mischievous cat.",
+    "Beautiful and elegant cat seeking a loving owner."
+  ],
+  "Birds" => [
+    "Colorful parrot with vibrant feathers.",
+    "Friendly bird that can mimic your voice.",
+    "Energetic and intelligent bird."
+  ],
+  "Fish" => [
+    "Beautiful fish that will add tranquility to your aquarium.",
+    "Graceful and vibrant fish.",
+    "Low-maintenance fish for beginners."
+  ],
+  "Reptiles" => [
+    "Fascinating reptile with unique patterns.",
+    "Calm and docile reptile.",
+    "Exotic reptile for reptile enthusiasts."
+  ],
+  "Small Mammals" => [
+    "Adorable hamster that loves to run on the wheel.",
+    "Cute and cuddly guinea pig.",
+    "Playful and curious rabbit."
+  ]
+}
 
 rand(7..10).times.each do |i|
   puts "Pet number #{i}"
-  random_pet_url = "https://source.unsplash.com/random/1000x500/?pet"
-  pet = Pet.new(name: Faker::Creature::Dog.name, description: descriptions.sample, user_id: user_ids.sample, category_id: category_ids.sample)
+  category_id = category_ids.sample
+  category_name = Category.find(category_id).name
+  random_pet_url = "https://source.unsplash.com/random/500x1000/?#{category_name.downcase}"
+
+  pet = Pet.new(name: Faker::Creature::Dog.name, description: descriptions[category_name].sample, user_id: user_ids.sample, category_id: category_id)
+
   rand(3..5).times.each do |_|
     add_image(pet, random_pet_url)
     pet.save!

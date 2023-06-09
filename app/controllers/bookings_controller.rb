@@ -84,8 +84,6 @@ class BookingsController < ApplicationController
   end
 
   def status(booking)
-    status = "pending"
-
     case booking.status
     when 0
       "pending"
