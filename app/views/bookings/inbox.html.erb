@@ -1,26 +1,44 @@
 <div class="container">
   <div class="row text-center mx-1 my-2 border border-success rounded  rounded-5 bg-danger" style="min-height: 70vh">
-    <h1 class="text-center mt-3">Inbox<hr></h1>
-
-    <h3>Ongoing bookings</h3>
+    <h1 class="text-center mt-3">Inbox</h1>
+    <hr>
+    
+    <div class="btn"><h3 class="toggle-trigger">Ongoing bookings
+      <span class="badge bg-success text-danger rounded-pill "><%= @ongoing.size%></span>
+    </h3></div>
     <%= render "bookings/inboxlist", bookings: @ongoing %>
     <hr>
 
-
-    <h3>Pending booking requests:</h3>
-    <%= render "bookings/inboxlist", bookings: @pending_requests %>
+    <div class="btn"><h3 class="toggle-trigger">Pending requests
+      <span class="badge bg-success text-danger rounded-pill "><%= @pending_requests.size%></span>
+    </h3></div>
+    <%= render "bookings/inboxlist", bookings: @pending_requests%>
     <hr>
 
-    <h3>Accepted booking requests:</h3>
+    <div class="btn"><h3 class="toggle-trigger">Accepted booking
+      <span class="badge bg-success text-danger rounded-pill "><%= @accepted.size%></span>
+    </h3></div>
     <%= render "bookings/inboxlist", bookings: @accepted %>
     <hr>
 
-    <h3>Declined booking requests:</h3>
+    <div class="btn"><h3 class="toggle-trigger">Declined booking
+      <span class="badge bg-success text-danger rounded-pill "><%= @declined.size%></span>
+    </h3></div>
     <%= render "bookings/inboxlist", bookings: @declined %>
     <hr>
 
-    <h3>Compeleted booking requests:</h3>
+    <div class="btn"><h3 class="toggle-trigger">Compeleted booking
+      <span class="badge bg-success text-danger rounded-pill "><%= @completed.size%></span>
+    </h3></div>
     <%= render "bookings/inboxlist", bookings: @completed %>
-    <hr>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".toggle-trigger").click(function() {
+        $(this).parent().nextAll('.toggle-wrap').first().toggle('slow');
+    });
+});
+</script>

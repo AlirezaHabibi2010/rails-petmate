@@ -1,0 +1,36 @@
+  <div class="card mx-auto card-pet my-3 rounded rounded-3">
+    <% if current_user%>
+      <div class="heart-button position-absolute top-0 end-0 p-2 z-3">
+        <i
+          data-controller="heart-button"
+          data-heart-button-url-value="<%= current_user.bookmarked?(pet) ? pet_bookmark_url(pet, pet.bookmark(current_user)) : pet_bookmarks_url(pet) %>"
+          data-action="click->heart-button#toggleBookmark"
+          class="fas fa-heart fa-2x <%= "heart-red" if current_user.bookmarked?(pet) %>">
+        </i>
+      </div>
+    <% end %>
+    <% if pet.photos.present? %>
+      <%= render "pets/gallery", pet: pet%>
+    <% else %>
+      <%= image_tag 'cat', alt: 'Pet picture', class: 'card-img-top' %>
+    <% end %>
+    <div class="d-flex">
+      <div class="p-2 align-self-center flex-grow-1">
+        <div class="d-flex justify-content-between">
+        <h2 class="m-0"><%= pet.name %></h2>
+        <div class="p-0 m-0 align-self-center">
+          <p class="">
+            <%= pet.average_rating %>
+            <i class="fa-solid fa-star text-success" style="text-shadow: 0px 0px 0px"></i>
+          </p>
+        </div>
+
+        </div>
+        <p class="m-0"><%= pet.user.address %></p>
+      </div>
+    </div>
+    <p class="card-text p-1 p-2">
+      <%= pet.description %>
+    </p>
+    <%= link_to "Read more", pet_path(pet), class:"btn btn-success my-0"%>
+  </div>

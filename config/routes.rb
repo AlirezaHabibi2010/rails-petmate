@@ -18,6 +18,12 @@ Rails.application.routes.draw do
   end
 
   resources :bookings, only: %i[show edit update] do
+    member do
+      patch  :accepted
+      patch  :ongoing
+      patch  :completed
+      patch  :declined
+    end
     resources :messages, only: %i[new create]
   end
 

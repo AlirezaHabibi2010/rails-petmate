@@ -1,13 +1,18 @@
 <div class="widget-content" data-unavailable="[]">
-  <%= simple_form_for :search, url: pets_path, method: :get, html: { class: "pet-search-form mb-2" } do |f| %>
-    <input class="form-control string required" type="text" placeholder="Where" name="search[where]" />
+  <style>
+    select {
+      background: $danger
+    }
+  </style>
+  <%= simple_form_for :search, url: pets_path, method: :get, html: { class: "mb-2" } do |f| %>
+    <input class="form-control string required col-12 bg-danger" type="text" placeholder="Where" name="search[where]" />
     <div class="d-flex">
-      <input class="form-control string required" type="text" placeholder="From" name="search[from]" data-controller="flatpickr"/>
-      <input class="form-control string required" type="text" placeholder="To" name="search[to]" data-controller="flatpickr" />
+      <input class="form-control string required bg-danger" type="text" placeholder="From" name="search[from]" data-controller="flatpickr"/>
+      <input class="form-control string required bg-danger" type="text" placeholder="To" name="search[to]" data-controller="flatpickr" />
     </div>
-    <%= f.input :type, collection:  Category.pluck(:name) , label: false, placeholder: "Type of pet", class: "form-control string required"%>
+    <%= f.input :type, collection:  Category.pluck(:name) , label: false, placeholder: "Type of pet", class: "form-control string required bg-danger", input_html: { class: 'bg-danger' }%>
     <div class="w-100 text-center">
-      <button name="button" type="submit" class="btn btn-flat">
+      <button name="button" type="submit" class="btn btn-success">
         <i class="fas fa-search"></i> Search
       </button>
     </div>
@@ -15,35 +20,5 @@
 </div>
 
 <% @pets.each do |pet| %>
-  <div class="card mx-auto card-pet my-3">
-    <div class="heart-button position-absolute top-0 end-0">
-      <i
-        data-controller="heart-button"
-        data-heart-button-url-value="<%= current_user.bookmarked?(pet) ? pet_bookmark_url(pet, pet.bookmark(current_user)) : pet_bookmarks_url(pet) %>"
-        data-action="click->heart-button#toggleBookmark"
-        class="fas fa-heart fa-2x <%= "heart-red" if current_user.bookmarked?(pet) %>">
-      </i>
-    </div>
-    <% if pet.photos.present? %>
-      <%= image_tag pet.photos.first.url, class: 'rounded-bottom-4 card-img-top', alt: 'Pet picture' %>
-    <% else %>
-      <%= image_tag 'cat', alt: 'Pet picture', class: 'rounded-bottom-4 card-img-top' %>
-    <% end %>
-    <div class="d-flex">
-      <div class="p-2 align-self-center mr-auto">
-        <h2 class="m-0"><%= pet.name %></h2>
-        <p class="m-0"><%= pet.user.address %></p>
-        <p class="m-0"><%= pet.id %></p>
-      </div>
-      <div class="p-2 align-self-center card-rating">
-        <% pet.average_rating.times do %>
-          <i class="fa-solid fa-star"></i>
-        <% end %>
-      </div>
-    </div>
-    <p class="card-text p-1">
-      <%= pet.description %>
-    </p>
-    <%= link_to "Read more", pet_path(pet), class:"btn btn-flat my-0"%>
-  </div>
+  <%= render "pet_card", pet: pet%>
 <% end %>

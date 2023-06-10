@@ -4,4 +4,9 @@ class Message < ApplicationRecord
 
   validates_presence_of :content, :booking, :user
   validates_length_of :content, minimum: 1
+
+
+  scope :unread_message_number, ->(user) {
+    where.not(user_id: user, read: true).count
+  }
 end

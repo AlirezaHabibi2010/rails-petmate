@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_pet, only: %i[new create show]
-  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking, unread_message_number]
+  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking accepted declined ongoing completed]
 
   def new
     @booking = Booking.new
@@ -35,7 +35,7 @@ class BookingsController < ApplicationController
     end
   end
 
-  def requests_list # for renter
+  def requests_list
     @bookings = policy_scope(Booking)
     authorize @bookings
     @declined = @bookings.where({ status: 2 })
@@ -43,9 +43,8 @@ class BookingsController < ApplicationController
     @pending_requests = @bookings.where({ status: 0 })
   end
 
-  def inbox # for renter
+  def inbox
     @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(:updated_at)
-
     authorize @bookings
     @completed = @bookings.where({ status: 4 })
     @ongoing = @bookings.where({ status: 3 })
@@ -54,21 +53,40 @@ class BookingsController < ApplicationController
     @pending_requests = @bookings.where({ status: 0 })
   end
 
-  def decline
+    def accepted
+      authorize @booking
+      if @booking.accepted!
+        redirect_to booking_chatroom_path(@booking), notice: "Booking has been accepted!"
+      else
+        raise
+        render :chatroom, notice: 'Booking could not be accepted - please try again'
+      end
+    end
+
+  def declined
     authorize @booking
-    if @booking.update({ declined: true, confirmed_by_owner: false })
-      redirect_to pets_owner_requests_list_path
+    if @booking.declined!
+      redirect_to booking_chatroom_path(@booking), notice: "Booking has been declined!"
     else
-      render :new, status: :unprocessable_entity
+      render :chatroom, status: :unprocessable_entity, notice: 'Booking could not be accepted - please try again'
     end
   end
 
-  def accept
+  def ongoing
     authorize @booking
-    if @booking.update({ status: 1})
-      redirect_to pets_owner_requests_list_path
+    if @booking.ongoing!
+      redirect_to booking_chatroom_path(@booking), notice: "Pet is going to have fun!"
     else
-      render :new, status: :unprocessable_entity
+      render :chatroom, status: :unprocessable_entity, notice: 'Booking could not be ongoing - please try again'
+    end
+  end
+
+  def completed
+    authorize @booking
+    if @booking.completed!
+      redirect_to booking_chatroom_path(@booking), notice: "Pet has been returned!"
+    else
+      render :chatroom, status: :unprocessable_entity, notice: 'Booking could not be completed - please try again'
     end
   end
 
@@ -78,34 +96,13 @@ class BookingsController < ApplicationController
 
   def chatroom
     authorize @booking
-    @status = status(@booking)
     @message = Message.new
-    read_message
+    marks_as_read_message
   end
 
-  def status(booking)
-    case booking.status
-    when 0
-      "pending"
-    when 1
-      "accepted"
-    when 2
-      "declines"
-    when 3
-      "ongoing"
-    when 4
-      "completed"
-    end
-  end
-
-  def read_message
+  def marks_as_read_message
     @messages = @booking.messages
     @messages.where.not(user: current_user).update({ read: true })
-  end
-
-  def unread_message_number
-    @messages = @booking.messages
-    return @messages.where.not(user: current_user, read: false).count
   end
 
   private
