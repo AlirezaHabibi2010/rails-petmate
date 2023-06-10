@@ -30,7 +30,7 @@
                   <%= "Please Wating for Pet review!" %>
                 <%end%>
               <%else%>
-                <% if @booking.status = "completed"%>
+                <% if @booking.status == "completed"%>
                   <%= button_to "Write a review", "#" , method: :patch, class: "btn btn-success  mx-1" %>
                 <%end%>
 
