@@ -10,7 +10,7 @@
               </div>
 
               <div class="p-2 flex-grow-1">
-                  <h2 class="m-0 text-left px-3"><%= link_to booking.pet.name, pet_path(booking.pet), class:"link-primary text-decoration-none" %></h2>
+                  <h2 class="m-0 text-start px-3"><%= link_to booking.pet.name, pet_path(booking.pet), class:"link-success text-decoration-none" %></h2>
                 <div class="d-flex flex-wrap w-100">
                   <div class="d-flex flex-column justify-content-start mx-3  text-start ">
                     <p class="m-0"> <strong>Pet owner:</strong> <%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>

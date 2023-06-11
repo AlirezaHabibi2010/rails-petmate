@@ -7,6 +7,6 @@ class Message < ApplicationRecord
 
 
   scope :unread_message_number, ->(user) {
-    where.not(user_id: user, read: true).count
+    where.not(user_id: user).where.not(read: true).count
   }
 end
