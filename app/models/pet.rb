@@ -51,7 +51,7 @@ class Pet < ApplicationRecord
     if reviews.empty?
       0
     else
-      reviews.average(:rating).round
+      reviews.average(:rating).round(1)
     end
   end
 

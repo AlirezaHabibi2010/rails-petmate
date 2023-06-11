@@ -15,9 +15,9 @@ class BookingsController < ApplicationController
 
     if @booking.save
       @booking.messages.create(content: params["message"].present? ? params["message"] : "default message", user: current_user)
-      redirect_to booking_confirmation_path(@booking), notice: "Booking was successfully saved."
+      redirect_to confirmation_booking_path(@booking), notice: "Booking was successfully saved."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity, class:"btn"
     end
   end
 
@@ -31,7 +31,7 @@ class BookingsController < ApplicationController
       @booking.update({ status: 0 })
       redirect_to pet_path(@booking.pet), notice: "Booking was successfully edited."
     else
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -56,7 +56,7 @@ class BookingsController < ApplicationController
     def accepted
       authorize @booking
       if @booking.accepted!
-        redirect_to booking_chatroom_path(@booking), notice: "Booking has been accepted!"
+        redirect_to chatroom_booking_path(@booking), notice: "Booking has been accepted!"
       else
         raise
         render :chatroom, notice: 'Booking could not be accepted - please try again'
@@ -66,7 +66,7 @@ class BookingsController < ApplicationController
   def declined
     authorize @booking
     if @booking.declined!
-      redirect_to booking_chatroom_path(@booking), notice: "Booking has been declined!"
+      redirect_to chatroom_booking_path(@booking), notice: "Booking has been declined!"
     else
       render :chatroom, status: :unprocessable_entity, notice: 'Booking could not be accepted - please try again'
     end
@@ -75,7 +75,7 @@ class BookingsController < ApplicationController
   def ongoing
     authorize @booking
     if @booking.ongoing!
-      redirect_to booking_chatroom_path(@booking), notice: "Pet is going to have fun!"
+      redirect_to chatroom_booking_path(@booking), notice: "Pet is going to have fun!"
     else
       render :chatroom, status: :unprocessable_entity, notice: 'Booking could not be ongoing - please try again'
     end
@@ -84,7 +84,7 @@ class BookingsController < ApplicationController
   def completed
     authorize @booking
     if @booking.completed!
-      redirect_to booking_chatroom_path(@booking), notice: "Pet has been returned!"
+      redirect_to chatroom_booking_path(@booking), notice: "Pet has been returned!"
     else
       render :chatroom, status: :unprocessable_entity, notice: 'Booking could not be completed - please try again'
     end

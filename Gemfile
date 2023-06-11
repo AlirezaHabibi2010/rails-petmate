@@ -53,6 +53,9 @@ gem "bootsnap", require: false
 gem "sassc-rails"
 gem 'bootstrap', '~> 5.3.0.alpha3'
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
+
+
 gem 'faker'
 # gem "dotenv-rails", groups: [:development, :test]
 # gem "cloudinary"

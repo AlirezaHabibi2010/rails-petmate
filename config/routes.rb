@@ -1,18 +1,19 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root to: "pages#home"
+  get "/profile", to: "pages#profile"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  get "/bookings/:id/confirmation", to: "bookings#confirmation", as: "booking_confirmation"
   get "/bookings/requests_list", to: "bookings#requests_list"
-  get "/inbox", to: "bookings#inbox"
-  get "/bookings/:id/chatroom", to: "bookings#chatroom", as: "booking_chatroom"
   get "/pets/owner_requests_list", to: "pets#owner_requests_list"
+  get "/pets/list", to: "pets#list"
+  get "/inbox", to: "bookings#inbox"
 
   # Defines the root path route ("/")
   # root "articles#index"
   resources :bookmarks, only: :index
   resources :categories, only: %i[new create show]
-  resources :pets, only: %i[index new create show]  do
+  resources :pets, only: %i[index new create show list]  do
     resources :bookings, only: %i[new create edit update]
     resources :bookmarks, only: %i[create destroy]
   end
@@ -23,6 +24,8 @@ Rails.application.routes.draw do
       patch  :ongoing
       patch  :completed
       patch  :declined
+      get    :chatroom
+      get    :confirmation
     end
     resources :messages, only: %i[new create]
   end

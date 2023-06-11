@@ -18,6 +18,11 @@ class PetsController < ApplicationController
     end
   end
 
+  def list
+    @pets = policy_scope(Pet).where(user: current_user).order(:name)
+    authorize @pets
+  end
+
   def show
     @pet = Pet.find(params[:id])
     authorize @pet
@@ -80,6 +85,7 @@ class PetsController < ApplicationController
     end
     authorize @pets
   end
+
 
   private
 

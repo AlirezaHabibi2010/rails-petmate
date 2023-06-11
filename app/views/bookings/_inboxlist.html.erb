@@ -28,7 +28,7 @@
                     </div>
                     <ul class="list-group list-group-horizontal border-0 p-0 m-0 justify-content-center">
                       <li class="list-group-item p-0 m-0  border-0">
-                        <%= link_to booking_chatroom_path(booking), class: "btn m-1 ml-0"  do %>
+                        <%= link_to chatroom_booking_path(booking), class: "btn m-1 ml-0"  do %>
                           <%if booking.messages.unread_message_number(current_user) != 0%>
                             <small class="badge bg-success text-danger rounded-pill fw-lighter"><%= booking.messages.unread_message_number(current_user)%></small>
                           <% end %>
