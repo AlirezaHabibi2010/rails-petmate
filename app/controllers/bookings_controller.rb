@@ -61,15 +61,15 @@ class BookingsController < ApplicationController
     @pending_requests = @bookings.where({ status: 0 })
   end
 
-    def accepted
-      authorize @booking
-      if @booking.accepted!
-        redirect_to chatroom_booking_path(@booking), notice: "Booking has been accepted!"
-      else
-        raise
-        render :chatroom, notice: 'Booking could not be accepted - please try again'
-      end
+  def accepted
+    authorize @booking
+    if @booking.accepted!
+      redirect_to chatroom_booking_path(@booking), notice: "Booking has been accepted!"
+    else
+      raise
+      render :chatroom, notice: 'Booking could not be accepted - please try again'
     end
+  end
 
   def declined
     authorize @booking
@@ -104,8 +104,6 @@ class BookingsController < ApplicationController
 
   def chatroom
     authorize @booking
-    @message = Message.new
-    @review = Review.new
     marks_as_read_message
   end
 

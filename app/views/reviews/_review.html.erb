@@ -1,0 +1,30 @@
+<div id="reviewModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= simple_form_for [booking, Review.new], html: { id: "reviewForm", data: { controller: "star-rating" } } do |f| %>
+        <div class="modal-header">
+          <h5 class="modal-title">Write a Review</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="rating my-1">
+            <span class="me-4"> Rate the pet: </span>
+            <% (1..5).each do |rating| %>
+              <%= f.label :rating, class: "star-label", data: { action: "click->star-rating#selectStar", value: rating } do %>
+                <%= f.radio_button :rating, rating, id: "rating_#{rating}", class: "star-input visually-hidden" %>
+                <i class="fa-star fa-regular text-success"  role="button" data-star-rating-target="star"></i>
+              <% end %>
+            <% end %>
+          </div>
+          <%= f.input :content, as: :text, label: "Review", input_html: { class: 'bg-danger' } %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Submit Review", class: "btn btn-success" %>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
