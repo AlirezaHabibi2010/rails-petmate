@@ -1,0 +1,23 @@
+
+          <%= simple_form_for [@booking, Review.new], html: { id: "reviewForm", class: "d-flex" } do |f| %>
+      <div id="reviewModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Review</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <%= f.input :rating, label: "Rating", as: :select, collection: 0..5, include_blank: false %>
+              <%= f.input :content, label: "Message", as: :text, input_html: { rows: 3 } %>
+            </div>
+            <div class="modal-footer">
+              <%= f.submit "Submit", class: "btn btn-success" %>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>

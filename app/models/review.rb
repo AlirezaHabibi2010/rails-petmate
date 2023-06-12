@@ -2,6 +2,7 @@ class Review < ApplicationRecord
   belongs_to :booking
   has_one :user, through: :booking
   has_one :pet, through: :booking
+  has_one :chatroom, through: :booking
 
   validates_presence_of :content, :booking, :rating
   validates :rating, inclusion: { in: 0..5 }
