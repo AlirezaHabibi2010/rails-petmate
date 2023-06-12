@@ -9,9 +9,17 @@ export default class extends Controller {
     const url = this.urlValue
 
     if (this.element.classList.contains("heart-red")) {
-      // delete bookmark
-
+      console.log(url)
+      fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Accept": "text/plain",
+          "X-CSRF-Token": csrfToken
+        }
+      })
     } else {
+      console.log(url)
+
       // create bookmark
       fetch(url, {
         method: "POST",
@@ -26,6 +34,5 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log("hi")
   }
 }

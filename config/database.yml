@@ -5,12 +5,8 @@ default: &default
 
 development:
   <<: *default
-  database: rails-petmate2_development
+  database: rails-petmate_development
 
 test:
   <<: *default
-  database: rails-petmate2_test
-
-production:
-  <<: *default
-  database: rails-petmate2_development
+  database: rails-petmate_test

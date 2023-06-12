@@ -1,13 +1,16 @@
   <div class="card mx-auto card-pet my-3 rounded rounded-3">
     <% if current_user%>
+    <turbo-frame id="new_message">
       <div class="heart-button position-absolute top-0 end-0 p-2 z-3">
         <i
           data-controller="heart-button"
-          data-heart-button-url-value="<%= current_user.bookmarked?(pet) ? pet_bookmark_url(pet, pet.bookmark(current_user)) : pet_bookmarks_url(pet) %>"
+          data-heart-button-url-value="<%= current_user.bookmarked?(pet) ? bookmark_url(current_user.bookmarked_for(pet)) : pet_bookmarks_url(pet)%>"
           data-action="click->heart-button#toggleBookmark"
           class="fas fa-heart fa-2x <%= "heart-red" if current_user.bookmarked?(pet) %>">
         </i>
       </div>
+    </turbo-frame>
+
     <% end %>
     <% if pet.photos.present? %>
       <%= render "pets/gallery", pet: pet%>

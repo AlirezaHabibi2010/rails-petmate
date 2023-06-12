@@ -1,5 +1,5 @@
   <h2 class="mt-3 row mx-2 justify-content-center sticky-top text-success border border-success rounded  rounded-5 bg-danger text-center py-3">My favourite pets</h2>
   <hr>
   <% @bookmarks.each do |bookmark| %>
-    <%= render "pets/pet_card", pet: bookmark.pet%>
+    <%= render "pets/pet_card", pet: bookmark.pet, bookmark: bookmark%>
   <% end %>
