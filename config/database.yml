@@ -5,14 +5,8 @@ default: &default
 
 development:
   <<: *default
-  database: rails-watch-list_development
+  database: rails-petmate2_development
 
 test:
   <<: *default
-  database: rails-watch-list_test
-
-production:
-  <<: *default
-  database: petmate_production
-  username: petmate
-  password: <%= ENV["PETMATE_DATABASE_PASSWORD"] %>
+  database: rails-petmate2_test
