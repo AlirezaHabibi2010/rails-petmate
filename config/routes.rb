@@ -11,8 +11,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+<<<<<<< HEAD
   resources :bookmarks, only: [:index, :destroy]
   resources :categories, only: %i[new create show]
+=======
+  resources :bookmarks, only: :index
+  resources :categories, except: [:destroy]
+>>>>>>> 7aae9612abc320d2d287d399b7a51c3875969646
   resources :pets, only: %i[index new create show list]  do
     member do
       patch  :deactivate
