@@ -7,15 +7,27 @@ class CategoryPolicy < ApplicationPolicy
     end
   end
 
-  def create?
+  def show?
     true
   end
 
+  def new
+    create?
+  end
+
+  def create?
+    user.admin?
+  end
+
+  def edit?
+    update?
+  end
+
   def update?
-    record.user == user
+    user.admin?
   end
 
   def destroy?
-    record.user == user
+    record.user == user || user.admin?
   end
 end
