@@ -10,7 +10,7 @@ class PetPolicy < ApplicationPolicy
   class ScopeList < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      user.admin? ? scope.all : scope.where(user: user)
+      user.admin? ? scope.all.where(activated: true) : scope.where(user: user).where(activated: true)
     end
   end
 
