@@ -6,17 +6,24 @@ class BookmarksController < ApplicationController
     @bookmark = current_user.bookmarks.create(pet: @pet)
 
     authorize @bookmark
-
     respond_to do |format|
-      format.html { redirect_to @pet, notice: "Pet bookmarked successfully." }
+      format.html { redirect_back_or_to @pet, notice: "Pet added to favorite successfully." }
       format.text { head :ok }
     end
   end
 
   def destroy
-    @bookmark = current_user.bookmarks.find_by(pet_id: params[:pet_id])
-    @bookmark.destroy if @bookmark
-    redirect_to pet_path(params[:pet_id]), notice: "Bookmark removed successfully."
+    @bookmark = Bookmark.find(params[:id])
+    authorize @bookmark
+    if @bookmark
+      @bookmark.destroy
+      respond_to do |format|
+        format.html { redirect_back_or_to @pet, notice: "Pet removed from favorite successfully." }
+        format.text { head :ok }
+      end
+    else
+      render :nothing
+    end
   end
 
   def index

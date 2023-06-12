@@ -47,6 +47,10 @@ class Pet < ApplicationRecord
     end
   end
 
+  def deactivate!
+    update(activated: false)
+  end
+
   def average_rating
     if reviews.empty?
       0
