@@ -28,6 +28,6 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user == user || user.admin?
+    user.admin?
   end
 end
