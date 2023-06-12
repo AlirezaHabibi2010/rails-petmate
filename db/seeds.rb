@@ -36,13 +36,13 @@ end
 category_ids = Category.ids
 
 puts "Creating users"
-user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, Cologne, Germany")
+user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, Cologne, Germany", admin: true)
 url = "https://avatars.githubusercontent.com/u/130074355?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
 
-user = User.new(email: "martis3007@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Marta", last_name: "Spilnyk", address: "Cologne, Germany")
+user = User.new(email: "martis3007@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Marta", last_name: "Spilnyk", address: "Cologne, Germany", admin: true)
 url = "https://avatars.githubusercontent.com/u/119310647?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
@@ -102,7 +102,6 @@ rand(7..10).times.each do |i|
   rand(3..5).times.each do |_|
     add_image(pet, random_pet_url)
     pet.save!
-    sleep(1.0)
   end
 end
 
