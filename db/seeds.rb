@@ -109,25 +109,21 @@ end
 pet_ids = Pet.ids
 
 puts "Creating bookings"
-rand(10..15).times.each do
+rand(50..60).times.each do
   booking = Booking.new(start_time: Faker::Time.between_dates(from: Date.today + 30, to: Date.today + 60, period: :day), end_time: Faker::Time.between_dates(from: Date.today + 61, to: Date.today + 90, period: :day), pet_id: pet_ids.sample, user_id: user_ids.sample)
   booking.save!
+
+  review = Review.new(
+    content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: true),
+    rating: rand(0..5),
+    booking_id: booking.id
+  )
+  review.save!
 end
 
 puts "Creating reviews"
 booking_ids = Booking.ids
 
-rand(50..100).times do
-  booking_id = booking_ids.sample
-  booking = Booking.find(booking_id)
-
-  review = Review.new(
-    content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: true),
-    rating: rand(0..5),
-    booking_id: booking_id
-  )
-  review.save!
-end
 
 puts "Creating messages"
 rand(10..15).times do
@@ -143,7 +139,7 @@ rand(10..15).times do
 end
 
 puts "Creating bookmarks"
-rand(5..10).times do
+rand(10..20).times do
   user_id = user_ids.sample
   pet_id = pet_ids.sample
 

@@ -1,16 +1,42 @@
 <div class="container col-12 col-md-6 col-lg-4">
-    <div class="chatroom"
+    <div class="chatroom rounded rounded-5 "
       data-controller="chatroom-subscription"
       data-chatroom-subscription-chatroom-id-value="<%= @booking.id %>"
     >
           <h1>Messages</h1>
 
-          <p class="px-4 py-0 m-0">
+          <p class="px-4 py-0 m-0 ">
             <strong>Chat Between:</strong> <%= @booking.user.first_name %> and <%= @booking.pet.user.first_name %>
             <br>
             <strong>Pet:</strong> <%= @booking.pet.name %>
             <br>
-            <strong>Status:</strong> <%= @status %>
+            <strong>Status:</strong> <%= @booking.status %>
+            <br>
+
+            <div class="text-center d-flex justify-content-center">
+              <% if @booking.pet.user == current_user%>
+                <% case @booking.status %>
+                <% when "pending" %>
+                  <%= button_to  "Accept", accepted_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
+                  <%= button_to "Decline", declined_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
+                <% when "accepted" %>
+                  <%= button_to "Decline", declined_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
+                  <%= button_to "Pet delivered", ongoing_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
+                <% when "declined" %>
+                  <%= button_to "Accept", accepted_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
+                <% when "ongoing" %>
+                  <%= button_to "Completed", completed_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
+                <% when "completed"%>
+                  <%= "Please Wating for Pet review!" %>
+                <%end%>
+              <%else%>
+                <% if @booking.status == "completed"%>
+                  <%= button_to "Write a review", "#" , method: :patch, class: "btn btn-success  mx-1" %>
+                <%end%>
+
+              <%end%>
+            </div>
+
           </p>
 
           <div class="messages" data-chatroom-subscription-target="messages">
@@ -24,7 +50,7 @@
           %>
             <%= f.input :content,
               label: false,
-              placeholder: "Write new massage",
+              placeholder: "Write new message",
               class: "bg-danger",
               id: "usermsg",
               wrapper_html: {class: "flex-grow-1"}

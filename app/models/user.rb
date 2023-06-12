@@ -18,4 +18,10 @@ class User < ApplicationRecord
   def bookmarked?(pet)
     bookmarks.map(&:pet).include?(pet)
   end
+
+  def full_name
+    "#{first_name.capitalize} #{last_name.capitalize}"
+  end
+
+
 end

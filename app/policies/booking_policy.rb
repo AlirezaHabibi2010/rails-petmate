@@ -47,11 +47,19 @@ class BookingPolicy < ApplicationPolicy
     true
   end
 
-  def accept?
+  def accepted?
     record.pet.user == user
   end
 
-  def decline?
+  def declined?
+    record.pet.user == user
+  end
+
+  def ongoing?
+    record.pet.user == user
+  end
+
+  def completed?
     record.pet.user == user
   end
 

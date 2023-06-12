@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row text-center mx-1 my-2 border border-success rounded  rounded-5 bg-danger" style="min-height: 91vh">
+    <h1 class="text-center mt-3 p-2 align-self-center">My profile</h1>
+    <hr>
+
+    <% if user_signed_in? %>
+      <div class="flex-grow-1 m-0 p-0 justify-content-center align-self-center" >
+        <% if current_user.photo.attached? %>
+            <%= cl_image_tag current_user.photo.key, class: "rounded-circle ", alt: "dropdown menu", style:"width: 30%" %>
+        <% else %>
+            <%= image_tag "https://img.favpng.com/1/15/9/scalable-vector-graphics-computer-icons-user-profile-portable-network-graphics-png-favpng-n05BjRqcBz9Ub9NtAbz8GXEaN.jpg", class: "avatar", alt: "dropdown menu" %>
+        <%end%>
+      </div>
+
+      <h2 class="flex-grow-1 m-0 p-0 justify-content-center align-self-center">Hello <%=current_user.full_name%></h2>
+
+      <hr>
+      <div class="justify-content-center align-self-center">
+        <%= link_to "My pets", pets_list_path, class: "btn btn-success m-2 py-3 col-8  align-self-center" %>
+        <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-success m-2 col-8 py-3  align-self-center" %>
+        <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "btn btn-success m-2 col-8 m-2  py-3  align-self-center" %>
+      </div>
+    <% else %>
+      <div class="justify-content-center align-self-center">
+        <%= link_to "Login", new_user_session_path, class: "btn btn-success m-2 col-8 m-2  py-3" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  skip_before_action :authenticate_user!, only: :index
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
     @pets = policy_scope(Pet)
@@ -16,6 +16,11 @@ class PetsController < ApplicationController
         @pets = @pets.find_without_bookings_between_dates(start_date, end_date)
       end
     end
+  end
+
+  def list
+    @pets = policy_scope(Pet).where(user: current_user).order(:name)
+    authorize @pets
   end
 
   def show
@@ -80,6 +85,7 @@ class PetsController < ApplicationController
     end
     authorize @pets
   end
+
 
   private
 

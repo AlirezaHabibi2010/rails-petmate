@@ -1,5 +1,7 @@
 <div class="container">
-<h2>Log in</h2>
+  <div class="row text-center mx-1 my-2 border border-success rounded  rounded-5 bg-danger" style="min-height: 91vh">
+    <h2 class="text-center mt-3 p-2 align-self-center">Log in</h2>
+    <hr>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: :false }) do |f| %>
   <div class="form-inputs">
@@ -14,10 +16,11 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+    <%= f.button :submit, "Log in", class:"brn btn-success" %>
   </div>
 <% end %>
 
 <%= render "devise/shared/links" %>
 
+</div>
 </div>

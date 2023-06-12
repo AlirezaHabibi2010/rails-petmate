@@ -1,28 +1,5 @@
-<div class="content-container">
-  <h3>My favourite pets</h3>
+  <h2 class="mt-3 row mx-2 justify-content-center sticky-top text-success border border-success rounded  rounded-5 bg-danger text-center py-3">My favourite pets</h2>
+  <hr>
   <% @bookmarks.each do |bookmark| %>
-    <div class="card mx-auto card-pet my-3">
-      <% if bookmark.pet.photos.present? %>
-        <%= image_tag bookmark.pet.photos.first.url, class: 'rounded-bottom-4 card-img-top', alt: 'Pet picture' %>
-      <% else %>
-        <%= image_tag 'cat', alt: 'Pet picture', class: 'rounded-bottom-4 card-img-top' %>
-      <% end %>
-      <div class="d-flex">
-        <div class="p-2 align-self-center mr-auto">
-          <ul><%= bookmark.pet.name %></ul>
-          <ul><%= bookmark.pet.user.address %></ul>
-          <ul class="m-0"><%= bookmark.pet.id %></ul>
-        </div>
-        <div class="p-2 align-self-center card-rating">
-          <% bookmark.pet.average_rating.times do %>
-            <i class="fa-solid fa-star"></i>
-          <% end %>
-        </div>
-      </div>
-      <p class="card-text p-1">
-        <%= bookmark.pet.description %>
-      </p>
-      <%= link_to "Read more", pet_path(bookmark.pet), class:"btn btn-flat my-0"%>
-    </div>
+    <%= render "pets/pet_card", pet: bookmark.pet%>
   <% end %>
-</div>
