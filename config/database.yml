@@ -9,4 +9,4 @@ development:
 
 test:
   <<: *default
-  database: rails-petmate
+  database: rails-petmate_test

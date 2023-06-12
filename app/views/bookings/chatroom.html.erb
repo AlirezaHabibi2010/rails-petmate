@@ -14,7 +14,7 @@
             <br>
 
             <div class="text-center d-flex justify-content-center">
-              <% if @booking.pet.user == current_user%>
+              <% if @booking.pet.user == current_user %>
                 <% case @booking.status %>
                 <% when "pending" %>
                   <%= button_to  "Accept", accepted_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
@@ -26,15 +26,13 @@
                   <%= button_to "Accept", accepted_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
                 <% when "ongoing" %>
                   <%= button_to "Completed", completed_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
-                <% when "completed"%>
-                  <%= "Please Wating for Pet review!" %>
-                <%end%>
-              <%else%>
-                <% if @booking.status == "completed"%>
-                  <%= button_to "Write a review", "#" , method: :patch, class: "btn btn-success  mx-1" %>
-                <%end%>
-
-              <%end%>
+                <% end %>
+              <% end %>
+              <% if @booking.review.nil? and @booking.status == "completed" and @booking.pet.user != current_user %>
+                <%= link_to "Write a review", "#", class: "btn btn-success mx-1", data: { bs_toggle: "modal", bs_target: "#reviewModal" } %>
+              <% else %>
+                <%= "Please wait for Pet review!" %>
+              <% end %>
             </div>
 
           </p>
@@ -58,5 +56,35 @@
             <%= f.submit "Send", class: "btn btn-success mb-3" %>
           <% end %>
 
+       <div id="reviewModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <%= simple_form_for [@booking, @review], html: { id: "reviewForm", data: { controller: "star-rating" } } do |f| %>
+             <div class="modal-header">
+                <h5 class="modal-title">Write a Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              <div class="rating">
+                <% (1..5).each do |rating| %>
+                  <%= f.label :rating, class: "star-label", data: { action: "click->star-rating#selectStar", value: rating } do %>
+                    <%= f.radio_button :rating, rating, id: "rating_#{rating}", class: "star-input visually-hidden" %>
+                    <i class="fa-star fa-regular" data-star-rating-target="star"></i>
+                  <% end %>
+                <% end %>
+              </div>
+
+                <%= f.input :content, as: :text, label: "Message" %>
+              </div>
+              <div class="modal-footer">
+                <%= f.submit "Submit Review", class: "btn btn-success" %>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+          <% end %>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

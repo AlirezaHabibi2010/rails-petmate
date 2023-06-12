@@ -105,6 +105,7 @@ class BookingsController < ApplicationController
   def chatroom
     authorize @booking
     @message = Message.new
+    @review = Review.new
     marks_as_read_message
   end
 

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       get    :confirmation
     end
     resources :messages, only: %i[new create]
+    resources :reviews, only: %i[new create edit update destroy]
   end
 
   require "sidekiq/web"
