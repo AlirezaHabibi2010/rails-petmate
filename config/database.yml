@@ -10,3 +10,7 @@ development:
 test:
   <<: *default
   database: rails-petmate2_test
+
+production:
+  <<: *default
+  database: rails-petmate2_development
