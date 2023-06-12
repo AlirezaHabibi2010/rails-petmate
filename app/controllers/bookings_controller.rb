@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :set_pet, only: %i[new create show]
-  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking accepted declined ongoing completed]
+  before_action :set_booking, only: %i[edit update confirmation chatroom set_booking accepted declined ongoing completed deactivate]
 
   def new
     @booking = Booking.new
@@ -19,6 +19,14 @@ class BookingsController < ApplicationController
     else
       render :new, status: :unprocessable_entity, class:"btn"
     end
+  end
+
+  def deactivate
+    authorize @booking
+
+    @booking.deactivate!
+
+    redirect_back_or_to inbox_path, notice: "Booking was successfully deleted."
   end
 
   def edit
@@ -44,7 +52,7 @@ class BookingsController < ApplicationController
   end
 
   def inbox
-    @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(:updated_at)
+    @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(updated_at: :desc)
     authorize @bookings
     @completed = @bookings.where({ status: 4 })
     @ongoing = @bookings.where({ status: 3 })

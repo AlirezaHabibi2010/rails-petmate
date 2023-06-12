@@ -19,6 +19,10 @@ class User < ApplicationRecord
     bookmarks.map(&:pet).include?(pet)
   end
 
+  def bookmarked_for(pet)
+    bookmarks.where(pet: pet).first
+  end
+
   def full_name
     "#{first_name.capitalize} #{last_name.capitalize}"
   end

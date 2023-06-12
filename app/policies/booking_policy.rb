@@ -3,9 +3,9 @@ class BookingPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       if user.admin?
-        scope.all
+        scope.where(activated: true)
       else
-        scope.where(user: user)
+        scope.where(user: user, activated: true)
       end
     end
   end
@@ -14,10 +14,10 @@ class BookingPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       if user.admin?
-        scope.all
+        scope.where(activated: true)
       else
-        scope.includes(:pet).where(pet: {user: user}).or(
-          scope.where(bookings: {user: user})
+        scope.where(activated: true).includes(:pet).where(pet: {user: user}).or(
+          scope.where(activated: true).where(bookings: {user: user})
         )
       end
     end
@@ -73,5 +73,9 @@ class BookingPolicy < ApplicationPolicy
 
   def inbox?
     true
+  end
+
+  def deactivate?
+    record.user == user
   end
 end

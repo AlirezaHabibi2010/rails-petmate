@@ -3,7 +3,7 @@ class PetPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       # user.admin? ? scope.all : scope.where(user: user)
-      scope.all
+      scope.where(activated: true)
     end
   end
 
@@ -35,6 +35,10 @@ class PetPolicy < ApplicationPolicy
   end
 
   def destroy?
+    record.user == user
+  end
+
+  def deactivate?
     record.user == user
   end
 

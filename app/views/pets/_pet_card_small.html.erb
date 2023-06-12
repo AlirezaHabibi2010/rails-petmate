@@ -8,6 +8,13 @@
       <div class="p-2 align-self-center flex-grow-1">
         <div class="d-flex justify-content-between">
         <h2 class="m-0"><%= pet.name %></h2>
+        <li class="list-group-item p-0 m-0  border-0">
+          <%= link_to raw('<i class="fa-sharp fa-solid fa-trash" style="color:  #617A55;"></i>'),
+            deactivate_pet_path(pet),
+            data: {turbo_method: :patch, turbo_confirm: "Are you sure?"},
+            class: "btn m-1"
+          %>
+        </li>
         <div class="p-0 m-0 align-self-center">
           <p class="">
             <%= pet.average_rating %>

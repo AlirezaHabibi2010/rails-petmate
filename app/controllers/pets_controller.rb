@@ -50,6 +50,7 @@ class PetsController < ApplicationController
   end
 
   def update
+    @pet = Pet.find(params[:id])
     @pet.update(pet_params)
     authorize @pet
 
@@ -59,6 +60,15 @@ class PetsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def deactivate
+    @pet = Pet.find(params[:id])
+    authorize @pet
+    @pet.deactivate!
+
+    redirect_back_or_to pet_path(@pet), notice: "Pet was successfully deleted."
+  end
+
 
   def owner_requests_list
     @pets = policy_scope(Pet).where(user: current_user).order(:name)
