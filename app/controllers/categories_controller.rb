@@ -1,8 +1,20 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: %i[show edit update]
+  before_action :set_category, only: %i[show edit update destroy]
 
   def index
     @categories = policy_scope(Category)
+  end
+
+  def destroy
+    @category = Category.find(params[:id])
+    authorize @category
+
+    if @category.pets.empty?
+      @category.destroy
+      redirect_to categories_path, notice: "Category was successfully deleted."
+    else
+      redirect_to categories_path, notice: "Failed to delete category, it is used by at least one pet."
+    end
   end
 
   def show
