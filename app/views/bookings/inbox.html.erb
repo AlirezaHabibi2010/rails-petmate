@@ -1,4 +1,13 @@
+<meta name="turbo-visit-control" content="reload">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".toggle-trigger").click(function() {
+        $(this).parent().nextAll('.toggle-wrap').first().toggle('slow');
+    });
+});
+</script>
 <div class="container">
   <div class="row text-center mx-1 my-2 border border-success rounded  rounded-5 bg-danger" style="min-height: 91vh">
     <h1 class="text-center mt-3">Inbox</h1>
@@ -34,11 +43,3 @@
     <%= render "bookings/inboxlist", bookings: @completed %>
   </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $(".toggle-trigger").click(function() {
-        $(this).parent().nextAll('.toggle-wrap').first().toggle('slow');
-    });
-});
-</script>

@@ -1,0 +1,40 @@
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="card rounded shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-center"><span class="highlight">Reviews</span> (<%= @pet.reviews.count %>)</h5>
+          <% reviews.first(5).each do |review| %>
+            <%= render "reviews/single_review", review: review %>
+          <% end %>
+          <% if reviews.count > 5 %>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reviewsModal">
+              View All Reviews
+            </button>
+          <% end %>
+           <%= link_to "Hang with this pet", new_pet_booking_path(@pet) , class: "btn btn-success d-block mx-auto mt-3" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="reviewsModal" tabindex="-1" aria-labelledby="reviewsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewsModalLabel">All Reviews</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% reviews.each do |review| %>
+          <%= render "reviews/single_review", review: review %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
