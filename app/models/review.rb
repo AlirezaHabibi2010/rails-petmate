@@ -5,6 +5,6 @@ class Review < ApplicationRecord
 
   validates_presence_of :content, :booking, :rating
   validates :rating, inclusion: { in: 0..5 }
-  validates_length_of :content, minimum: 10
+  validates_length_of :content, minimum: 0, allow_blank: true
   validates :booking, uniqueness: :true
 end
