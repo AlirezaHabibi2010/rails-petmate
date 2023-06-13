@@ -26,6 +26,7 @@
 h2 {
   text-align: center;
   margin-bottom: 50px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .full-height {
@@ -66,4 +67,8 @@ h1 {
 }
 .full-screen-image {
   margin-bottom: 30px;
+}
+
+.disable-scroll {
+  overflow: hidden;
 }

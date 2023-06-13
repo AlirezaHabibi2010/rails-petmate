@@ -9,4 +9,7 @@ class Message < ApplicationRecord
   scope :unread_message_number, ->(user) {
     where.not(user_id: user).where.not(read: true).count
   }
+  # scope :received_message_number, ->(user) {
+  #   joins(:bookings).where.not(messages: { user_id: user }).where.not(messages: { read: true }).where(bookings: { user_id: user.id }).count
+  # }
 end
