@@ -27,11 +27,20 @@
               <%= button_to "Completed", completed_booking_path(@booking), method: :patch, class: "btn btn-success mx-1" %>
             <% end %>
             <% if @booking.status == "completed" %>
-              <%= "Please wait for Pet review!" %>
+              <% if @booking.review.nil? %>
+                <%= "Please wait for Pet review!" %>
+              <% else %>
+                <div>
+                  <hr class="m-1 text-success">
+                  <%= "Review is submitted. You can see the review in the " %>
+                  <%= link_to @booking.pet.name, @booking.pet, class:"text-decoration-none text-success fw-bold" %>
+                  <%= "'s page." %>
+                </div>
+              <% end %>
             <% end %>
           <% end %>
           <% if  @booking.pet.user != current_user %>
-            <% if @booking.messages.nil? && @booking.status == "completed"%>
+            <% if @booking.review.nil? && @booking.status == "completed"%>
               <%= link_to "Write a review", "#", class: "btn btn-success mx-1", data: { bs_toggle: "modal", bs_target: "#reviewModal" } %>
             <% elsif  @booking.status == "completed" %>
               <%= "Thank you for the review." %>

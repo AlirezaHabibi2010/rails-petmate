@@ -15,7 +15,9 @@ class ReviewsController < ApplicationController
     if @review.save
       redirect_back_or_to chatroom_booking_path(@booking), notice: "Review was successfully created."
     else
-      render "bookings/chatroom", status: :unprocessable_entity, notice: "Review was failed."
+      flash[:notice] = "Wrong details. Try again \n #{@review.errors.messages[:content][0]}"
+      redirect_back_or_to "bookings/chatroom"
+      # render "bookings/chatroom", status: :unprocessable_entity, notice: "Saving review was failed."
     end
   end
 

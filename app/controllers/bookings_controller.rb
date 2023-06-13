@@ -23,9 +23,7 @@ class BookingsController < ApplicationController
 
   def deactivate
     authorize @booking
-
     @booking.deactivate!
-
     redirect_back_or_to inbox_path, notice: "Booking was successfully deleted."
   end
 
