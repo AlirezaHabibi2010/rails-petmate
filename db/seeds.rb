@@ -108,13 +108,13 @@ end
 pet_ids = Pet.ids
 
 puts "Creating bookings"
-rand(50..60).times.each do
+rand(10..20).times.each do
   booking = Booking.new(start_time: Faker::Time.between_dates(from: Date.today + 30, to: Date.today + 60, period: :day), end_time: Faker::Time.between_dates(from: Date.today + 61, to: Date.today + 90, period: :day), pet_id: pet_ids.sample, user_id: user_ids.sample)
   booking.save!
 
   review = Review.new(
     content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: true),
-    rating: rand(0..5),
+    rating: rand(2..5),
     booking_id: booking.id
   )
   review.save!
