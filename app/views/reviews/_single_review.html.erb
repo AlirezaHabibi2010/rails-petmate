@@ -1,6 +1,7 @@
 <div class="review-item">
   <div class="d-flex justify-content-between">
     <h6 class="card-subtitle mb-2 text-muted"><span class="user-name text-success"><%= review.user.first_name %></span></h6>
+    <p><%= review.updated_at.strftime("%Y-%m-%d %H-%M") %></p>
     <p class="">
       <%= review.rating %>
       <i class="fa-solid fa-star text-success" style="text-shadow: 0px 0px 0px"></i>
