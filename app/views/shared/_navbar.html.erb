@@ -22,11 +22,15 @@
       <li class="nav-item">
         <%= link_to inbox_path do %>
           <%= image_tag 'dogmessage.png', alt: 'Messages', id: 'navbar-message' %>
-          <% if current_user && current_user.unread_message_count > 0 %>
-            <span class="notification-badge"><%= current_user.unread_message_count %></span>
+           <% if current_user %>
+            <% if current_user.unread_message_count > 0 %>
+              <span class="notification-badge"><%= current_user.unread_message_count %></span>
+            <% end %>
           <% end %>
         <% end %>
       </li>
+
+
       <li class="nav-item">
         <%= link_to profile_path do %>
           <%= image_tag 'profile.png', alt: 'User', id: 'navbar-profile' %> <!-- Replace 'user.png' with the path to your user icon image -->
