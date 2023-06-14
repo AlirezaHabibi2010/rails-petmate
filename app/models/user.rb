@@ -27,5 +27,9 @@ class User < ApplicationRecord
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
-
+  def unread_message_count
+    messages.where(read: false).count
+    bookings.joins(:messages).where.not(messages: {user: self}).where(messages: {read: false}).count +
+    Booking.joins(:pet, :messages).where(pet: {user: self}).where.not(messages: {user: self}).where(messages: {read: false}).count
+  end
 end
