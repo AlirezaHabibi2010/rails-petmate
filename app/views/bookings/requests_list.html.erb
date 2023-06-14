@@ -1,12 +1,30 @@
+<style>
+  .toggle-wrap {
+    overflow: hidden;
+    transition: height 1.0s ease-in-out;
+  }
+
+  .hidden {
+    height: 0 !important;
+  }
+</style>
+
 <div class="container">
   <h1 class="text-center mt-3">All My Booking Requests</h1>
 
-  <h3>Pending booking requests:</h3>
-  <%= render "bookings/booking_cards", requests: @pending_requests%>
+  <hr>
+  <%= render "bookings/booking_cards",
+      requests: @pending_requests,
+      request_type: "Pending booking requests" %>
 
-  <h3>Accepted booking requests:</h3>
-  <%= render "bookings/booking_cards", requests: @accepted%>
+  <hr>
+  <%= render "bookings/booking_cards",
+      requests: @accepted,
+      request_type: "Accepted booking requests" %>
 
-  <h3>Completed booking requests:</h3>
-  <%= render "bookings/booking_cards", requests: @completed%>
+  <hr>
+  <%= render "bookings/booking_cards",
+      requests: @completed,
+      request_type: "Completed booking requests" %>
+  <hr>
 </div>

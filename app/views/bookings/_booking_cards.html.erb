@@ -1,4 +1,10 @@
-<div class="row mt-3 mx-2 justify-content-center">
+<div data-controller="toggle">
+
+<h3 data-action="click->toggle#toggle"><%= request_type %>
+  <span class="badge bg-success text-danger rounded-pill "><%= requests.size%></span>
+</h3>
+
+<div class="row mt-3 mx-2 justify-content-center toggle-wrap hidden" data-toggle-target="toggleWrap">
   <% requests.each do |booking| %>
     <div class="col-md-4 mb-3">
       <div class="border border-success rounded rounded-5 bg-danger text-center py-3 position-relative">
@@ -48,4 +54,5 @@
       </div>
     </div>
   <% end %>
+</div>
 </div>
