@@ -16,7 +16,6 @@ Pet.destroy_all
 Category.destroy_all
 User.destroy_all
 
-
 def add_image(model, url)
   downloaded_image = URI.parse(URI::Parser.new.escape(url)).open
   if model.respond_to?(:photos)
@@ -42,13 +41,13 @@ file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
 
-user = User.new(email: "martis3007@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Marta", last_name: "Spilnyk", address: "Cologne, Germany", admin: true)
+user = User.new(email: "martis3007@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Marta", last_name: "Spilnyk", address: "Cologne, Germany", admin: false)
 url = "https://avatars.githubusercontent.com/u/119310647?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
 
-user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Jülich, Germany", admin: true)
+user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Jülich, Germany", admin: false)
 url = "https://avatars.githubusercontent.com/u/87390313?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
@@ -112,36 +111,119 @@ rand(10..20).times.each do
   booking = Booking.new(start_time: Faker::Time.between_dates(from: Date.today + 30, to: Date.today + 60, period: :day), end_time: Faker::Time.between_dates(from: Date.today + 61, to: Date.today + 90, period: :day), pet_id: pet_ids.sample, user_id: user_ids.sample)
   booking.save!
 
-  review = Review.new(
-    content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: true),
-    rating: rand(2..5),
-    booking_id: booking.id
-  )
-  review.save!
-end
+  puts "Creating reviews"
+  booking_ids = Booking.ids
 
-puts "Creating reviews"
-booking_ids = Booking.ids
+  pet_category_reviews = {
+    "Dogs" => [
+      "I had an amazing time with %{pet_name}, such a lovely dog!",
+      "Spending time with %{pet_name} was pure joy, such a playful companion!",
+      "Taking care of %{pet_name} was a wonderful experience, a truly special dog!",
+      "I can't express how much I enjoyed my time with %{pet_name}, an absolute sweetheart!",
+      "The moments spent with %{pet_name} will always be cherished, a fantastic dog!",
+      "Words cannot describe the happiness %{pet_name} brought into my life, a remarkable companion!",
+      "I'm grateful for the opportunity to have met and cared for %{pet_name}, an exceptional dog!",
+      "Playing and bonding with %{pet_name} was a highlight of my day, such a lovable pet!",
+      "Looking after %{pet_name} was a pleasure, a truly amazing dog!",
+      "I'll never forget the memories made with %{pet_name}, a remarkable canine friend!"
+    ],
+    "Cats" => [
+      "I had a great experience with %{pet_name}, such an adorable cat!",
+      "Taking care of %{pet_name} was a delight, a truly charming feline!",
+      "The company of %{pet_name} brought me so much joy, an amazing cat!",
+      "Cuddling with %{pet_name} was the best, a sweet and affectionate companion!",
+      "I fell in love with %{pet_name} the moment I saw them, a truly special cat!",
+      "Being around %{pet_name} was a calming and peaceful experience, a lovely feline friend!",
+      "I'll always remember the playful moments I shared with %{pet_name}, a fantastic cat!",
+      "Meeting and getting to know %{pet_name} was a privilege, an extraordinary cat!",
+      "Taking care of %{pet_name} was a heartwarming experience, an adorable and gentle cat!",
+      "Spending time with %{pet_name} made me appreciate the unique nature of cats, a wonderful pet!"
+    ],
+    "Birds" => [
+      "I enjoyed spending time with %{pet_name}, a colorful and intelligent bird!",
+      "Meeting %{pet_name} was a unique experience, a beautiful feathered friend!",
+      "The vibrant presence of %{pet_name} brightened up my day, a truly captivating bird!",
+      "Observing the intelligence of %{pet_name} was fascinating, a remarkable feathered companion!",
+      "Taking care of %{pet_name} allowed me to appreciate the beauty of birds, an incredible pet!",
+      "The melodic sounds of %{pet_name}'s chirping brought tranquility, a delightful bird!",
+      "I'll always remember the charming personality of %{pet_name}, a wonderful feathered friend!",
+      "Bonding with %{pet_name} was an enriching experience, an intelligent and curious bird!",
+      "Having the opportunity to care for %{pet_name} was a privilege, an extraordinary bird!",
+      "The playful nature of %{pet_name} made every moment enjoyable, a fantastic feathered companion!"
+    ],
+    "Fish" => [
+      "I had a peaceful time observing %{pet_name} swimming in the aquarium!",
+      "Watching %{pet_name} glide gracefully through the water was mesmerizing!",
+      "The calming presence of %{pet_name} brought tranquility to the aquarium, a beautiful fish!",
+      "Taking care of %{pet_name} was a low-maintenance and rewarding experience, a lovely fish!",
+      "The vibrant colors of %{pet_name} added beauty to the aquarium, a mesmerizing fish!",
+      "Caring for %{pet_name} was a soothing and therapeutic experience, a graceful swimmer!",
+      "I'll always remember the tranquility %{pet_name} brought into my home, a wonderful fish!",
+      "The unique patterns of %{pet_name} made it stand out, a truly captivating fish!",
+      "Having %{pet_name} as a pet was a great way to appreciate the wonders of aquatic life!",
+      "Observing the behaviors of %{pet_name} was a fascinating experience, an extraordinary fish!"
+    ],
+    "Reptiles" => [
+      "I learned a lot about reptiles while taking care of %{pet_name}, a fascinating creature!",
+      "Caring for %{pet_name} allowed me to appreciate the beauty of reptiles!",
+      "Meeting %{pet_name} was an opportunity to learn more about reptiles, a unique companion!",
+      "The calm and docile nature of %{pet_name} made it easy to bond with, an incredible reptile!",
+      "Taking care of %{pet_name} was an exciting and educational experience, a wonderful reptile!",
+      "The unique patterns and textures of %{pet_name}'s skin were mesmerizing, a remarkable reptile!",
+      "Bonding with %{pet_name} was a special experience, a fascinating reptilian friend!",
+      "I'll always cherish the memories made with %{pet_name}, a captivating reptile companion!",
+      "Having %{pet_name} as a pet broadened my understanding and appreciation for reptiles!",
+      "Taking care of %{pet_name} was an adventure, an extraordinary reptilian companion!"
+    ],
+    "Small Mammals" => [
+      "I loved playing with %{pet_name}, such a cute and friendly small mammal!",
+      "Taking care of %{pet_name} brought me so much happiness, an adorable little companion!",
+      "The playful nature of %{pet_name} made every moment enjoyable, a delightful small mammal!",
+      "Bonding with %{pet_name} was a heartwarming experience, a truly charming pet!",
+      "Spending time with %{pet_name} was a joy, a lovable and cuddly small mammal!",
+      "I'll always remember the curious and inquisitive personality of %{pet_name}, a fantastic pet!",
+      "Having %{pet_name} as a companion added so much warmth and happiness to my life!",
+      "The energy and liveliness of %{pet_name} made it impossible not to smile, a wonderful small mammal!",
+      "Taking care of %{pet_name} was a rewarding experience, a truly special and adorable pet!",
+      "The gentle and affectionate nature of %{pet_name} made it a perfect cuddle buddy, an amazing small mammal!"
+    ]
+  }
 
+  rand(10..20).times.each do
+    booking = Booking.new(start_time: Faker::Time.between_dates(from: Date.today + 30, to: Date.today + 60, period: :day), end_time: Faker::Time.between_dates(from: Date.today + 61, to: Date.today + 90, period: :day), pet_id: pet_ids.sample, user_id: user_ids.sample)
+    booking.save!
 
-puts "Creating messages"
-rand(10..15).times do
-  booking_id = booking_ids.sample
-  user_id = user_ids.sample
+    pet = booking.pet
+    category_name = pet.category.name
+    pet_name = pet.name
 
-  message = Message.new(
-    content: Faker::Lorem.sentence(word_count: 5, supplemental: true),
-    booking_id: booking_id,
-    user_id: user_id
-  )
-  message.save!
-end
+    review = Review.new(
+      content: pet_category_reviews[category_name].sample.gsub('%{pet_name}', pet_name),
+      rating: rand(2..5),
+      booking_id: booking.id
+    )
+    review.save!
+  end
 
-puts "Creating bookmarks"
-rand(10..20).times do
-  user_id = user_ids.sample
-  pet_id = pet_ids.sample
+  puts "Creating messages"
+  rand(10..15).times do
+    booking_id = booking_ids.sample
+    user_id = user_ids.sample
 
-  bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
-  bookmark.save
+    message = Message.new(
+      content: Faker::Lorem.sentence(word_count: 5, supplemental: true),
+      booking_id: booking_id,
+      user_id: user_id
+    )
+    message.save!
+  end
+
+  puts "Creating bookmarks"
+  rand(10..20).times do
+    user_id = user_ids.sample
+    pet_id = pet_ids.sample
+
+    bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
+    bookmark.save
+  end
 end

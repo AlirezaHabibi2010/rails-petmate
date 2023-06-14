@@ -18,6 +18,7 @@
           <%= image_tag 'bookings.png', alt: 'Bookings', id: 'navbar-bookings' %> <!-- Replace 'search.png' with the path to your search icon image -->
         <% end %>
       </li>
+<<<<<<< HEAD
      <li class="nav-item">
         <%= link_to inbox_path do %>
           <%= image_tag 'dogmessage.png', alt: 'Messages', id: 'navbar-message' %>
@@ -25,6 +26,14 @@
             <% if current_user.unread_message_count > 0 %>
             <span class="notification-badge"><%= current_user.unread_message_count %></span>
             <% end %>
+=======
+
+      <li class="nav-item">
+        <%= link_to inbox_path do %>
+          <%= image_tag 'dogmessage.png', alt: 'Messages', id: 'navbar-message' %>
+          <% if current_user && current_user.unread_message_count > 0 %>
+            <span class="notification-badge"><%= current_user.unread_message_count %></span>
+>>>>>>> c006e78ed4c38df77912ac6b9be1162f0a1b7bd4
           <% end %>
         <% end %>
       </li>

@@ -28,8 +28,12 @@ class User < ApplicationRecord
   end
 
   def unread_message_count
+<<<<<<< HEAD
     messages.where(read: false).count
     bookings.joins(:messages).where.not(messages: {user: self}).where(messages: {read: false}).count +
     Booking.joins(:pet, :messages).where(pet: {user: self}).where.not(messages: {user: self}).where(messages: {read: false}).count
+=======
+    messages.where.not(user_id: id, read: true).count
+>>>>>>> c006e78ed4c38df77912ac6b9be1162f0a1b7bd4
   end
 end
