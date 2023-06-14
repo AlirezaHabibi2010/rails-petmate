@@ -27,5 +27,7 @@ class User < ApplicationRecord
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
-
+  def unread_message_count
+    messages.where.not(user_id: id, read: true).count
+  end
 end
