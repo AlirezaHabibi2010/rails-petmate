@@ -1,56 +1,12 @@
 <div class="container">
   <h1 class="text-center mt-3">All My Booking Requests</h1>
+
   <h3>Pending booking requests:</h3>
-  <div class="row mt-3 mx-2">
-    <% @pending_requests.each do |booking| %>
-      <div class="col-md-4 mb-3">
-        <div class="border border-success rounded rounded-5 bg-danger text-center py-3 position-relative">
-          <div class="d-flex flex-column align-items-center">
-            <h2 class="m-0 text-center"><%= link_to booking.pet.name, pet_path(booking.pet), class: "link-success text-decoration-none" %></h2>
-            <div class="rounded-circle overflow-hidden my-3" style="width: 100px; height: 100px;">
-              <%= cl_image_tag booking.pet.photos.first.key, style: "object-fit: cover; width: 100%; height: 100%;" %>
-            </div>
-          </div>
-          <div class="mx-3">
-            <div class="d-flex flex-column">
-              <div class="d-flex flex-column justify-content-center align-items-start mx-1">
-                <p class="m-0"><strong>Owner:</strong></p>
-                <p class="m-0"><%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>
-              </div>
-              <div class="d-flex flex-column justify-content-center align-items-start mx-1">
-                <p class="m-0"><strong>From:</strong></p>
-                <p class="m-0"><%= booking.start_time %></p>
-              </div>
-              <div class="d-flex flex-column justify-content-center align-items-start mx-1">
-                <p class="m-0"><strong>To:</strong></p>
-                <p class="m-0"><%= booking.end_time %></p>
-              </div>
-            </div>
-          </div>
+  <%= render "bookings/booking_cards", requests: @pending_requests%>
 
-          <div class="text-center d-flex justify-content-around mt-3">
-            <div class="">
-              <%= link_to chatroom_booking_path(booking), class: "btn btn-success m-1" do %>
-                <% if booking.messages.unread_message_number(current_user) != 0 %>
-                  <small class="badge bg-danger text-success rounded-pill fw-lighter">
-                    <%= booking.messages.unread_message_number(current_user) %>
-                  </small>
-                <% end %>
-                <i class="fa-solid fa-envelope"></i> Chat
-              <% end %>
-            </div>
-            <div class="text-end pr-2">
-              <%= link_to "Cancel",
-              booking_path(booking),
-              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-              class: "btn btn-success m-1"
-              %>
-            </div>
-          </div>
+  <h3>Accepted booking requests:</h3>
+  <%= render "bookings/booking_cards", requests: @accepted%>
 
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <br>
+  <h3>Completed booking requests:</h3>
+  <%= render "bookings/booking_cards", requests: @completed%>
 </div>
