@@ -259,13 +259,13 @@ url = "https://avatars.githubusercontent.com/u/119310647?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
+user_marta_id = user.id
 
 user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Clarenbachstraße 184, 50931 Cologne, Germany", admin: false)
 url = "https://avatars.githubusercontent.com/u/87390313?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
-
 user_ali_id = user.id
 
 cat_url = [
@@ -276,7 +276,7 @@ cat_url = [
   "https://img.myloview.com/stickers/close-up-portrait-of-a-white-cat-with-heterochromia-odd-eyes-wearing-a-pink-collar-with-bell-looking-directly-at-viewer-with-curious-expression-400-204673265.jpg"
 ]
 
-category_id =  Category.find_by(name: "Cats").id
+category_id = Category.find_by(name: "Cats").id
 category_name = Category.find(category_id).name
 random_pet_url = "https://source.unsplash.com/random/500x1000/?#{category_name.downcase}"
 pet = Pet.new(name: "Fluffy", description: descriptions[category_name].sample, user_id: user_ali_id, category_id: category_id)
