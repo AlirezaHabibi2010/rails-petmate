@@ -19,6 +19,8 @@ class Booking < ApplicationRecord
     update(activated: false)
   end
 
+  scope :sorted_by_date, -> { order(start_time: :asc) }
+
   scope :within_dates, ->(start_date, end_date) {
     where("(start_time, end_time) OVERLAPS (?, ?)", start_date, end_date)
   }
