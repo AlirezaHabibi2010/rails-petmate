@@ -19,7 +19,7 @@ end
 
 ###################################################################
 puts "Creating categories"
-categories = ["Dogs", "Cats", "Birds", "Fish", "Reptiles", "Small Mammals"]
+categories = ["Dogs", "Cats", "Birds", "Fish", "Reptiles"]
 categories.each do |category_name|
   Category.create!(name: category_name)
 end
@@ -198,16 +198,16 @@ pet_category_reviews = {
 rand(40..50).times.each do
   booking = Booking.new(
       start_time: Faker::Time.between_dates(
-        from: Date.today + 30, to: Date.today + 60, period: :day
+        from: Date.today - 60, to: Date.today - 30, period: :day
       ).change(sec: 0, min: 0), # Remove seconds from the start_time
       end_time: Faker::Time.between_dates(
-        from: Date.today + 61, to: Date.today + 90, period: :day
+        from: Date.today - 30, to: Date.today - 2 , period: :day
       ).change(sec: 0, min: 0), # Remove seconds from the end_time
       pet_id: pet_ids.sample,
       user_id: user_ids.sample
     )
   booking.status = "completed"
-  booking.save!
+  booking.save(validate: false)
 
   # add review
   pet = booking.pet
@@ -218,7 +218,8 @@ rand(40..50).times.each do
     rating: rand(2..5),
     booking_id: booking.id
   )
-  review.save!
+  review.updated_at = review.booking.end_time + rand(3600)
+  review.save(validate: false)
 
   puts "Creating messages"
   rand(10..15).times do
@@ -229,7 +230,7 @@ rand(40..50).times.each do
       booking_id: booking_id,
       user_id: user_id
     )
-    message.save!
+    message.save(validate: false)
   end
 end
 
@@ -240,14 +241,14 @@ rand(10..20).times do
   user_id = user_ids.sample
   pet_id = pet_ids.sample
   bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
-  bookmark.save
+  bookmark.save(validate: false)
 end
 
 
 ################################################################################
 puts "Creating main users"
 
-user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, 50931 Cologne, Germany", admin: true)
+user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, 50931 Cologne, Germany", admin: false)
 url = "https://avatars.githubusercontent.com/u/130074355?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
@@ -288,16 +289,16 @@ special_pet_id = pet.id
 5.times.each do
   booking = Booking.new(
     start_time: Faker::Time.between_dates(
-      from: Date.today + 1, to: Date.today + 30, period: :day
+      from: Date.today - 60, to: Date.today - 30, period: :day
     ).change(sec: 0, min: 0), # Remove seconds from the start_time
     end_time: Faker::Time.between_dates(
-      from: Date.today + 10 , to: Date.today + 50, period: :day
+      from: Date.today - 30 , to: Date.today - 1, period: :day
     ).change(sec: 0, min: 0), # Remove seconds from the end_time
     pet_id: special_pet_id,
     user_id: user_ids.sample
   )
   booking.status = "completed"
-  if booking.save
+  if booking.save(validate: false)
     # add review
     pet = booking.pet
     category_name = pet.category.name
@@ -307,7 +308,7 @@ special_pet_id = pet.id
       rating: rand(3..5),
       booking_id: booking.id
     )
-    review.updated_at = review.booking.end_time
-    review.save!
+    review.updated_at = review.booking.end_time + rand(3600)
+    review.save(validate: false)
   end
 end

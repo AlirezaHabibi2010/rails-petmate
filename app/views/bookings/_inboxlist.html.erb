@@ -23,8 +23,8 @@
                 <div class="d-flex flex-wrap justify-content-end  w-100">
                   <div class="d-flex flex-column justify-content-end mx-3 text-left flex-grow-1">
                     <div class="text-start">
-                      <p class="m-0"><strong>From:</strong> <%= booking.start_time %></p>
-                      <p class="m-0"><strong>To:</strong> <%= booking.end_time %></p>
+                      <p class="m-0"><strong>From:</strong> <%= booking.start_time.strftime("%Y-%m-%d %H-%M") %></p>
+                      <p class="m-0"><strong>To:</strong> <%= booking.end_time.strftime("%Y-%m-%d %H-%M") %></p>
                     </div>
                     <ul class="list-group list-group-horizontal border-0 p-0 m-0 justify-content-center">
                       <li class="list-group-item p-0 m-0  border-0">

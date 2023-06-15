@@ -17,16 +17,13 @@
         <div class="mx-3">
           <div class="d-flex flex-column">
             <div class="d-flex flex-column justify-content-center align-items-start mx-1">
-              <p class="m-0"><strong>Owner:</strong></p>
-              <p class="m-0"><%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>
+              <p class="m-0"><strong>Owner:</strong> <%= "#{booking.pet.user.first_name} #{booking.pet.user.last_name}" %></p>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-start mx-1">
-              <p class="m-0"><strong>From:</strong></p>
-              <p class="m-0"><%= booking.start_time %></p>
+              <p class="m-0"><strong>From:</strong> <%= booking.start_time.strftime("%Y-%m-%d %H-%M") %></p>
             </div>
             <div class="d-flex flex-column justify-content-center align-items-start mx-1">
-              <p class="m-0"><strong>To:</strong></p>
-              <p class="m-0"><%= booking.end_time %></p>
+              <p class="m-0"><strong>To:</strong> <%= booking.end_time.strftime("%Y-%m-%d %H-%M") %></p>
             </div>
           </div>
         </div>
@@ -44,9 +41,9 @@
           </div>
           <div class="text-end pr-2">
             <%= link_to "Cancel",
-            booking_path(booking),
-            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-            class: "btn btn-success m-1"
+              deactivate_booking_path(booking),
+              data: {turbo_method: :patch, turbo_confirm: "Are you sure?"},
+              class: "btn btn-success m-1"
             %>
           </div>
         </div>
