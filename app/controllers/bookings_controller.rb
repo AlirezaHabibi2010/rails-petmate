@@ -51,7 +51,7 @@ class BookingsController < ApplicationController
   end
 
   def inbox
-    @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(updated_at: :asc)
+    @bookings = policy_scope(Booking, policy_scope_class: BookingPolicy::Scopeinbox).order(updated_at: :desc)
     authorize @bookings
     @completed = @bookings.where({ status: 4 })
     @ongoing = @bookings.where({ status: 3 })
