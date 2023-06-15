@@ -1,4 +1,4 @@
-<div class="widget-content" data-unavailable="[]">
+<div class="widget-content m-2" data-unavailable="[]">
   <style>
     select {
       background: $danger
@@ -10,7 +10,7 @@
       <input class="form-control string required bg-danger border-success" type="text" placeholder="From" name="search[from]" data-controller="flatpickr"/>
       <input class="form-control string required bg-danger border-success" type="text" placeholder="To" name="search[to]" data-controller="flatpickr" />
     </div>
-    <%= f.input :type, collection:  Category.pluck(:name) , label: false, placeholder: "Type of pet", class: "form-control string required bg-danger", input_html: { class: 'bg-danger' }%>
+    <%= f.input :type, collection:  Category.pluck(:name) , label: false, placeholder: "Type of pet", class: "form-control string required", input_html: { class: 'bg-danger' }%>
     <div class="w-100 text-center">
       <button name="button" type="submit" class="btn btn-success">
         <i class="fas fa-search"></i> Search
