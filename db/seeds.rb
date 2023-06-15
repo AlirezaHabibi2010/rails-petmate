@@ -279,7 +279,7 @@ cat_url = [
 category_id =  Category.find_by(name: "Cats").id
 category_name = Category.find(category_id).name
 random_pet_url = "https://source.unsplash.com/random/500x1000/?#{category_name.downcase}"
-pet = Pet.new(name: "fluffy", description: descriptions[category_name].sample, user_id: user_ali_id, category_id: category_id)
+pet = Pet.new(name: "Fluffy", description: descriptions[category_name].sample, user_id: user_ali_id, category_id: category_id)
 cat_url.each do |url|
   add_image(pet, url)
   pet.save!
