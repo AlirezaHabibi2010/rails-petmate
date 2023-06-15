@@ -20,6 +20,7 @@ export default class extends Controller {
               Default: time,
               dateFormat: "Y-m-d H:i",
               disable: unvailableDates,
+              disableMobile: "true",
               // Provide an id for the plugin to work
               // plugins: [new rangePlugin({ input: "#endtime"})]
               // plugins: [new confirmDatePlugin({ input: this.startTimeValue})],
