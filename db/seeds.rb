@@ -1,12 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
 require 'open-uri'
-
 puts "Drop all!"
 Review.destroy_all
 Message.destroy_all
@@ -24,39 +16,33 @@ def add_image(model, url)
     model.update(photos: downloaded_image)
   end
 end
-
 puts "Creating categories"
 categories = ["Dogs", "Cats", "Birds", "Fish", "Reptiles", "Small Mammals"]
-
 categories.each do |category_name|
   Category.create!(name: category_name)
 end
-
 category_ids = Category.ids
-
+require 'open-uri'
 puts "Creating users"
-user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, Cologne, Germany", admin: true)
-url = "https://avatars.githubusercontent.com/u/130074355?v=4"
-file = URI.open(url)
-user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
-user.save!
-
-user = User.new(email: "martis3007@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Marta", last_name: "Spilnyk", address: "Cologne, Germany", admin: false)
-url = "https://avatars.githubusercontent.com/u/119310647?v=4"
-file = URI.open(url)
-user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
-user.save!
-
-user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Jülich, Germany", admin: false)
-url = "https://avatars.githubusercontent.com/u/87390313?v=4"
-file = URI.open(url)
-user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
-user.save!
-
-user_ids = User.ids
-
-puts "Creating pets"
-
+user_ids = []
+# Add 20 random user accounts
+20.times do
+  user = User.new(
+    email: Faker::Internet.email,
+    password: "123456",
+    password_confirmation: "123456",
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    address: Faker::Address.full_address,
+    admin: false
+  )
+  # Assign a random avatar image to the user
+  avatar_url = "https://randomuser.me/api/portraits/#{['men', 'women'].sample}/#{rand(1..99)}.jpg"
+  downloaded_image = URI.parse(URI::Parser.new.escape(avatar_url)).open
+  user.photo.attach(io: downloaded_image, filename: "avatar.jpg")
+  user.save!
+end
+user_ids += User.last(20).pluck(:id)
 descriptions = {
   "Dogs" => [
     "Meet the cutest little puppy ever!",
@@ -89,32 +75,22 @@ descriptions = {
     "Playful and curious rabbit."
   ]
 }
-
 rand(7..10).times.each do |i|
   puts "Pet number #{i}"
   category_id = category_ids.sample
   category_name = Category.find(category_id).name
   random_pet_url = "https://source.unsplash.com/random/500x1000/?#{category_name.downcase}"
-
   pet = Pet.new(name: Faker::Creature::Dog.name, description: descriptions[category_name].sample, user_id: user_ids.sample, category_id: category_id)
-
   rand(3..5).times.each do |_|
     add_image(pet, random_pet_url)
     pet.save!
+    sleep 1
   end
 end
-
 pet_ids = Pet.ids
-
 puts "Creating bookings"
-rand(10..20).times.each do
-  booking = Booking.new(start_time: Faker::Time.between_dates(from: Date.today + 30, to: Date.today + 60, period: :day), end_time: Faker::Time.between_dates(from: Date.today + 61, to: Date.today + 90, period: :day), pet_id: pet_ids.sample, user_id: user_ids.sample)
-  booking.save!
 
-  puts "Creating reviews"
-  booking_ids = Booking.ids
-
-  pet_category_reviews = {
+pet_category_reviews = {
     "Dogs" => [
       "I had an amazing time with %{pet_name}, such a lovely dog!",
       "Spending time with %{pet_name} was pure joy, such a playful companion!",
@@ -187,29 +163,37 @@ rand(10..20).times.each do
       "Taking care of %{pet_name} was a rewarding experience, a truly special and adorable pet!",
       "The gentle and affectionate nature of %{pet_name} made it a perfect cuddle buddy, an amazing small mammal!"
     ]
-  }
+}
 
-  rand(10..20).times.each do
-    booking = Booking.new(start_time: Faker::Time.between_dates(from: Date.today + 30, to: Date.today + 60, period: :day), end_time: Faker::Time.between_dates(from: Date.today + 61, to: Date.today + 90, period: :day), pet_id: pet_ids.sample, user_id: user_ids.sample)
-    booking.save!
+rand(40..50).times.each do
+  booking = Booking.new(
+    start_time: Faker::Time.between_dates(
+      from: Date.today + 30, to: Date.today + 60, period: :day
+    ).change(sec: 0, min: 0), # Remove seconds from the start_time
+    end_time: Faker::Time.between_dates(
+      from: Date.today + 61, to: Date.today + 90, period: :day
+    ).change(sec: 0, min: 0), # Remove seconds from the end_time
+    pet_id: pet_ids.sample,
+    user_id: user_ids.sample
+  )
+  booking.status = "completed"
+  booking.save!
 
-    pet = booking.pet
-    category_name = pet.category.name
-    pet_name = pet.name
-
-    review = Review.new(
-      content: pet_category_reviews[category_name].sample.gsub('%{pet_name}', pet_name),
-      rating: rand(2..5),
-      booking_id: booking.id
-    )
-    review.save!
-  end
+  # add review
+  pet = booking.pet
+  category_name = pet.category.name
+  pet_name = pet.name
+  review = Review.new(
+    content: pet_category_reviews[category_name].sample.gsub('%{pet_name}', pet_name),
+    rating: rand(2..5),
+    booking_id: booking.id
+  )
+  review.save!
 
   puts "Creating messages"
   rand(10..15).times do
-    booking_id = booking_ids.sample
-    user_id = user_ids.sample
-
+    booking_id = booking.id
+    user_id = pet.user.id
     message = Message.new(
       content: Faker::Lorem.sentence(word_count: 5, supplemental: true),
       booking_id: booking_id,
@@ -217,13 +201,81 @@ rand(10..20).times.each do
     )
     message.save!
   end
+end
 
-  puts "Creating bookmarks"
-  rand(10..20).times do
-    user_id = user_ids.sample
-    pet_id = pet_ids.sample
 
-    bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
-    bookmark.save
-  end
+
+puts "Creating bookmarks"
+rand(10..20).times do
+  user_id = user_ids.sample
+  pet_id = pet_ids.sample
+  bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
+  bookmark.save
+end
+
+
+################################################################################
+puts "Creating main users"
+user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, Cologne, Germany", admin: true)
+url = "https://avatars.githubusercontent.com/u/130074355?v=4"
+file = URI.open(url)
+user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
+user.save!
+user = User.new(email: "martis3007@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Marta", last_name: "Spilnyk", address: "Cologne, Germany", admin: false)
+url = "https://avatars.githubusercontent.com/u/119310647?v=4"
+file = URI.open(url)
+user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
+user.save!
+user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Cologne, Germany", admin: false)
+url = "https://avatars.githubusercontent.com/u/87390313?v=4"
+file = URI.open(url)
+user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
+user.save!
+user_ali_id = user.id
+
+cat_url = [
+"https://catsplace.org/wp-content/uploads/2015/02/khaomanee-khao-manee-cat-breed.jpg",
+"https://www.warrenphotographic.co.uk/photography/cats/49814.jpg",
+"https://static.standard.co.uk/s3fs-public/thumbnails/image/2018/08/08/11/elaine-and-sam.jpg?width=1024&auto=webp&quality=50&crop=968%3A645%2Csmart",
+"https://www.mediastorehouse.co.uk/p/172/cat-khao-manee-11753307.jpg.webp",
+"https://img.myloview.com/stickers/close-up-portrait-of-a-white-cat-with-heterochromia-odd-eyes-wearing-a-pink-collar-with-bell-looking-directly-at-viewer-with-curious-expression-400-204673265.jpg"
+]
+
+category_id =  Category.find_by(name: "Cats").id
+category_name = Category.find(category_id).name
+random_pet_url = "https://source.unsplash.com/random/500x1000/?#{category_name.downcase}"
+pet = Pet.new(name: "fluffy", description: descriptions[category_name].sample, user_id: user_ali_id, category_id: category_id)
+cat_url.each do |url|
+  add_image(pet, url)
+  pet.save!
+end
+special_pet_id = pet.id
+
+5.times.each do
+  booking = Booking.new(
+    start_time: Faker::Time.between_dates(
+      from: Date.today + 30, to: Date.today + 60, period: :day
+    ).change(sec: 0, min: 0), # Remove seconds from the start_time
+    end_time: Faker::Time.between_dates(
+      from: Date.today + 61, to: Date.today + 90, period: :day
+    ).change(sec: 0, min: 0), # Remove seconds from the end_time
+    pet_id: special_pet_id,
+    user_id: user_ids.sample
+  )
+  booking.status = "completed"
+  booking.save!
+
+  # add review
+  pet = booking.pet
+  category_name = pet.category.name
+  pet_name = pet.name
+  review = Review.new(
+    content: pet_category_reviews[category_name].sample.gsub('%{pet_name}', pet_name),
+    rating: rand(3..5),
+    booking_id: booking.id
+  )
+  review.updated_at =  Faker::Time.between_dates(
+          from: Date.today - 30, to: Date.today - 5, period: :day
+        ).change(sec: 0)
+  review.save!
 end
