@@ -56,4 +56,4 @@
     </div>
   </div>
 
-<%= render "reviews/pet_reviews", reviews: @pet.reviews.order(:updated_at)%>
+<%= render "reviews/pet_reviews", reviews: @pet.reviews.order(updated_at: :desc)%>
