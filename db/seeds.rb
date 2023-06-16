@@ -21,7 +21,7 @@ end
 puts "Creating categories"
 categories = ["Dog", "Cat", "Bird", "Fish", "Reptile"]
 categories.each do |category_name|
-  Category.create!(name: category_name)
+  Category.create!(name: category_name.pluralize )
 end
 category_ids = Category.ids
 require 'open-uri'
