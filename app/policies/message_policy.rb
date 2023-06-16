@@ -8,15 +8,15 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def create?
-    record.user == user || record.booking.pet.user == user
+    record.user == user || record.booking.pet.user == user ||  user.admin? 
   end
 
   def update?
-    record.user == user
+    record.user == user ||  user.admin?
   end
 
   def destroy?
-    record.user == user
+    record.user == user ||  user.admin?
   end
 
 end

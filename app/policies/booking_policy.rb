@@ -48,27 +48,27 @@ class BookingPolicy < ApplicationPolicy
   end
 
   def accepted?
-    record.pet.user == user
+    record.pet.user == user ||  user.admin?
   end
 
   def declined?
-    record.pet.user == user
+    record.pet.user == user ||  user.admin?
   end
 
   def ongoing?
-    record.pet.user == user
+    record.pet.user == user ||  user.admin?
   end
 
   def completed?
-    record.pet.user == user
+    record.pet.user == user ||  user.admin?
   end
 
   def confirmation?
-    record.user == user
+    record.user == user ||  user.admin?
   end
 
   def chatroom?
-    record.user == user || record.pet.user == user
+    record.user == user || record.pet.user == user ||  user.admin? 
   end
 
   def inbox?
@@ -76,6 +76,6 @@ class BookingPolicy < ApplicationPolicy
   end
 
   def deactivate?
-    record.user == user ||  user.admin? 
+    record.user == user ||  user.admin?
   end
 end
