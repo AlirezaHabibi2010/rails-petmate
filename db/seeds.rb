@@ -248,7 +248,7 @@ end
 ################################################################################
 puts "Creating main users"
 
-user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, 50931 Cologne, Germany", admin: false)
+user = User.new(email: "aaronsilva95@outlook.es", password: "123456", password_confirmation: "123456", first_name: "Aaron", last_name: "Lorenzo Silva", address: "Ulitzkastr., 13, 50931 Cologne, Germany", admin: true)
 url = "https://avatars.githubusercontent.com/u/130074355?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
