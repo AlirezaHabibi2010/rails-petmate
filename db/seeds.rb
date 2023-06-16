@@ -105,7 +105,7 @@ descriptions = {
   ]
   }
 
-10.times.each do |i|
+20.times.each do |i|
   puts "Pet number #{i}"
   category_id = category_ids.sample
   category_name = Category.find(category_id).name
@@ -195,7 +195,7 @@ pet_category_reviews = {
     ]
 }
 
-rand(40..50).times.each do
+60.times.each do
   booking = Booking.new(
       start_time: Faker::Time.between_dates(
         from: Date.today - 60, to: Date.today - 30, period: :day
@@ -237,7 +237,7 @@ end
 
 
 puts "Creating bookmarks"
-rand(10..20).times do
+30.times do
   user_id = user_ids.sample
   pet_id = pet_ids.sample
   bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
