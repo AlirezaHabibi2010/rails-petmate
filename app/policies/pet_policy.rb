@@ -31,15 +31,15 @@ class PetPolicy < ApplicationPolicy
   end
 
   def update?
-    record.user == user
+    record.user == user ||  user.admin?
   end
 
   def destroy?
-    record.user == user
+    record.user == user ||  user.admin?
   end
 
   def deactivate?
-    record.user == user
+    record.user == user ||  user.admin? 
   end
 
   def owner_requests_list?

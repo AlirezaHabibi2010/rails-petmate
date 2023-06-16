@@ -19,7 +19,11 @@ class PetsController < ApplicationController
   end
 
   def list
-    @pets = policy_scope(Pet).where(user: current_user).order(:name)
+    if current_user.admin
+      @pets = policy_scope(Pet)
+    else
+      @pets = policy_scope(Pet).where(user: current_user).order(:name)
+    end
     authorize @pets
   end
 
