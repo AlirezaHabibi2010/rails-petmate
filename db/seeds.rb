@@ -19,7 +19,7 @@ end
 
 ###################################################################
 puts "Creating categories"
-categories = ["Dogs", "Cats", "Birds", "Fish", "Reptiles"]
+categories = ["Dog", "Cat", "Bird", "Fish", "Reptile"]
 categories.each do |category_name|
   Category.create!(name: category_name)
 end
