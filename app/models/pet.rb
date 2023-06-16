@@ -25,7 +25,7 @@ class Pet < ApplicationRecord
                   }
 
   def self.find_without_bookings_between_dates(start_date, end_date)
-    where.not(id: Booking.within_dates(start_date, end_date).select(:pet_id))
+    where.not(id: Booking.where(status: ['accepted', 'ongoing']).within_dates(start_date, end_date).select(:pet_id))
   end
 
   belongs_to :category

@@ -19,9 +19,9 @@ end
 
 ###################################################################
 puts "Creating categories"
-categories = ["Dogs", "Cats", "Birds", "Fish", "Reptiles", "Small Mammals"]
+categories = ["Dog", "Cat", "Bird", "Fish", "Reptile"]
 categories.each do |category_name|
-  Category.create!(name: category_name)
+  Category.create!(name: category_name.pluralize )
 end
 category_ids = Category.ids
 require 'open-uri'
@@ -105,7 +105,7 @@ descriptions = {
   ]
   }
 
-10.times.each do |i|
+20.times.each do |i|
   puts "Pet number #{i}"
   category_id = category_ids.sample
   category_name = Category.find(category_id).name
@@ -195,19 +195,19 @@ pet_category_reviews = {
     ]
 }
 
-rand(40..50).times.each do
+60.times.each do
   booking = Booking.new(
       start_time: Faker::Time.between_dates(
-        from: Date.today + 30, to: Date.today + 60, period: :day
+        from: Date.today - 60, to: Date.today - 30, period: :day
       ).change(sec: 0, min: 0), # Remove seconds from the start_time
       end_time: Faker::Time.between_dates(
-        from: Date.today + 61, to: Date.today + 90, period: :day
+        from: Date.today - 30, to: Date.today - 2 , period: :day
       ).change(sec: 0, min: 0), # Remove seconds from the end_time
       pet_id: pet_ids.sample,
       user_id: user_ids.sample
     )
   booking.status = "completed"
-  booking.save!
+  booking.save(validate: false)
 
   # add review
   pet = booking.pet
@@ -218,7 +218,8 @@ rand(40..50).times.each do
     rating: rand(2..5),
     booking_id: booking.id
   )
-  review.save!
+  review.updated_at = review.booking.end_time + rand(3600)
+  review.save(validate: false)
 
   puts "Creating messages"
   rand(10..15).times do
@@ -229,18 +230,18 @@ rand(40..50).times.each do
       booking_id: booking_id,
       user_id: user_id
     )
-    message.save!
+    message.save(validate: false)
   end
 end
 
 
 
 puts "Creating bookmarks"
-rand(10..20).times do
+30.times do
   user_id = user_ids.sample
   pet_id = pet_ids.sample
   bookmark = Bookmark.new(user_id: user_id, pet_id: pet_id)
-  bookmark.save
+  bookmark.save(validate: false)
 end
 
 
@@ -258,13 +259,13 @@ url = "https://avatars.githubusercontent.com/u/119310647?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
+user_marta_id = user.id
 
 user = User.new(email: "habibi.alireza2010@gmail.com", password: "123456", password_confirmation: "123456", first_name: "Alireza", last_name: "Habibi", address: "Clarenbachstraße 184, 50931 Cologne, Germany", admin: false)
 url = "https://avatars.githubusercontent.com/u/87390313?v=4"
 file = URI.open(url)
 user.photo.attach(io: file, filename: "nes.png", content_type: "image/png")
 user.save!
-
 user_ali_id = user.id
 
 cat_url = [
@@ -275,10 +276,10 @@ cat_url = [
   "https://img.myloview.com/stickers/close-up-portrait-of-a-white-cat-with-heterochromia-odd-eyes-wearing-a-pink-collar-with-bell-looking-directly-at-viewer-with-curious-expression-400-204673265.jpg"
 ]
 
-category_id =  Category.find_by(name: "Cats").id
+category_id = Category.find_by(name: "Cats").id
 category_name = Category.find(category_id).name
 random_pet_url = "https://source.unsplash.com/random/500x1000/?#{category_name.downcase}"
-pet = Pet.new(name: "fluffy", description: descriptions[category_name].sample, user_id: user_ali_id, category_id: category_id)
+pet = Pet.new(name: "Fluffy", description: descriptions[category_name].sample, user_id: user_ali_id, category_id: category_id)
 cat_url.each do |url|
   add_image(pet, url)
   pet.save!
@@ -288,16 +289,16 @@ special_pet_id = pet.id
 5.times.each do
   booking = Booking.new(
     start_time: Faker::Time.between_dates(
-      from: Date.today + 1, to: Date.today + 30, period: :day
+      from: Date.today - 60, to: Date.today - 30, period: :day
     ).change(sec: 0, min: 0), # Remove seconds from the start_time
     end_time: Faker::Time.between_dates(
-      from: Date.today + 10 , to: Date.today + 50, period: :day
+      from: Date.today - 30 , to: Date.today - 1, period: :day
     ).change(sec: 0, min: 0), # Remove seconds from the end_time
     pet_id: special_pet_id,
     user_id: user_ids.sample
   )
   booking.status = "completed"
-  if booking.save
+  if booking.save(validate: false)
     # add review
     pet = booking.pet
     category_name = pet.category.name
@@ -307,7 +308,7 @@ special_pet_id = pet.id
       rating: rand(3..5),
       booking_id: booking.id
     )
-    review.updated_at = review.booking.end_time
-    review.save!
+    review.updated_at = review.booking.end_time + rand(3600)
+    review.save(validate: false)
   end
 end

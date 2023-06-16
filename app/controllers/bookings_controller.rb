@@ -14,7 +14,7 @@ class BookingsController < ApplicationController
     authorize @booking
 
     if @booking.save
-      @booking.messages.create(content: params["message"].present? ? params["message"] : "default message", user: current_user)
+      @booking.messages.create(content: params["message"].present? ? params["message"] : "Hello, I would like to hang out with your pet!", user: current_user)
       redirect_to confirmation_booking_path(@booking), notice: "Booking was successfully saved."
     else
       render :new, status: :unprocessable_entity, class:"btn"
