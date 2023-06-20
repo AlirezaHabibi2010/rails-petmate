@@ -74,6 +74,7 @@ Anyone who wants to learn how to build a web application using Ruby on Rails can
 - Partials and layouts
 - Authentication and authorization
 - Flash messages and redirects
+- Chatroom
 - Image uploading and processing
 - Pagination and search
 - User registration and profile editing
