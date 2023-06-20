@@ -37,6 +37,33 @@ To deploy PetMate to Heroku, follow these steps:
 - Run the migrations on Heroku: `heroku run rails db:migrate`
 - Open your app on Heroku: `heroku open`
 
+## Usage
+
+Once the Pet Reservation Marketplace is deployed, users can perform the following actions:
+
+- **Sign Up**: Create a new account to access the marketplace.
+- **Browse Pets**: Explore the available pets for reservation.
+- **Reserve Pets**: Reserve a pet by selecting the desired dates and completing the reservation process.
+- **Manage Reservations**: As a pet owner, manage and confirm incoming reservation requests.
+- **Leave Reviews**: Share your experiences by leaving reviews for reserved pets.
+
+## Benefits
+
+The Pet Reservation Marketplace offers several benefits to users:
+
+- **Convenience**: Users can easily find and reserve pets, streamlining the process of pet adoption.
+- **Variety of Pets**: The marketplace provides a wide range of pet options from different private owners.
+- **Trust and Transparency**: The platform promotes trust and transparency through user reviews and verified pet listings.
+- **Personalized Experience**: Users can connect directly with pet owners and discuss specific requirements or preferences.
+- **Pet Care Information**: The marketplace can also provide information on pet care and related services.
+
+By utilizing the Pet Reservation Marketplace, users can enjoy a seamless pet adoption experience, find their perfect companion, and contribute to providing loving homes for pets in need.
+
+## Contributing
+
+If you would like to contribute to the Pet Reservation Marketplace, feel free to submit pull requests or raise issues in the repository. Your contributions are welcome and will help improve the platform for everyone.
+
+
 ## How can anyone benefit from this code
 
 Anyone who wants to learn how to build a web application using Ruby on Rails can benefit from this code. This code demonstrates how to use various features and concepts of Rails, such as:
