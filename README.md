@@ -31,7 +31,7 @@ To deploy PetMate to Heroku, follow these steps:
 - Push your code to Heroku: `git push heroku master`
 - Install dependencies:
   ```sh
-    rails active_storage:install
+    heroku run rails active_storage:install
     heroku addons:create rediscloud:30
   ```
 - Run the migrations on Heroku: `heroku run rails db:migrate`
